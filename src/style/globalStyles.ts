@@ -27,6 +27,9 @@ export const GlobalStyle = createGlobalStyle`
         // === Font Sizes === //
 
         --text_small: 14px;
+        --text_normal: 16px;
+        --text_medium: 18px;
+        --text_large: 24px;
     }
 
     *{

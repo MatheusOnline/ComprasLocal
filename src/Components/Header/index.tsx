@@ -1,15 +1,21 @@
+import Logo from '../../assets/logo.png'
+import { ContainerHeader, ContainerActions } from './styled'
+
+import { Button } from '../Button'
+import { Search } from '../Search'
+
 export const Header = () => {
     return(
-        <header>
-            <img src="" alt="" />
+        <ContainerHeader>
+            <img src={Logo} alt="Logo" />
 
-            <input type="text" name="" id="" />
+            <Search/>
 
-            <div>
-                <button>Entrar</button>
-                <button>Cadastrar</button>
-            </div>
+            <ContainerActions>
+                <Button variant="primary" scale="normal" >Entrar</Button>
+                <Button variant="secondary" scale="normal" >Cadastrar</Button>
+            </ContainerActions>
 
-        </header>
+        </ContainerHeader>
     )
 }

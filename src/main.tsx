@@ -5,7 +5,7 @@ import { GlobalStyle } from './style/globalStyles.ts'
 
 
 
-import { Home } from './Pages/Home/Index.tsx'
+import { AppRoutes } from './appRouters.tsx'
 
 import './index.css'
 
@@ -16,6 +16,6 @@ createRoot(document.getElementById('root')!).render(
 
     <StrictMode>
       <GlobalStyle/>
-      <Home />
+      <AppRoutes />
     </StrictMode>
 )

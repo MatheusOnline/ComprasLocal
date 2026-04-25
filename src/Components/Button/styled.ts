@@ -33,18 +33,22 @@ const variants: Record<Variant, { bg: string; color: string; border: string; hov
     
 };
 
-const sizes: Record<Scale, { padding: string; }> = {
+const sizes: Record<Scale, { padding: string; font_size: string }> = {
     small: {
-        padding: "5px 10px"
+        padding: "5px 10px",
+        font_size: "var(--text_small)"
     },
     normal: {
-        padding: "10px 20px"
+        padding: "10px 20px",
+        font_size: "var(--text_normal)"
     },
     medium: {
-        padding: "15px 30px"
+        padding: "15px 30px",
+        font_size: "var(--text_medium)"
     },
     large: {
-        padding: "20px 40px"
+        padding: "20px 40px",
+        font_size: "var(--text_large)"
     }
 };
 
@@ -57,11 +61,20 @@ export const ButtonStyled = styled.button<{ variant?: Variant; scale?: Scale; }>
     border: ${({ variant = "primary" }) => variants[variant].border};
 
     padding: ${({ scale = "normal" }) => sizes[scale].padding};
-    
+    font-size: ${({ scale = "normal" }) => sizes[scale].font_size};
 
+    transition: 0.2s;
+    
     &:hover{
-        transition: 0.2s;
         cursor: pointer;
         background-color: ${({ variant = "primary" }) => variants[variant].hover};
+    }
+
+    &:disabled {
+        background-color: #ccc;
+        color: #666;
+        border: none;
+        cursor: not-allowed;
+        opacity: 0.7;
     }
 `;

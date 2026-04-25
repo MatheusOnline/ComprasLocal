@@ -9,13 +9,15 @@ type ButtonProps = {
     children: ReactNode;
     variant?: Variant;
     scale?: Scale;
+    disable?: boolean;
 }
 
 
-export const Button = ({ children, variant, scale }: ButtonProps) => {
+export const Button = ({ children, variant, scale, disable }: ButtonProps) => {
     return(
-        <ButtonStyled variant={variant} scale={scale}>
+        <ButtonStyled variant={variant} scale={scale} disabled={disable}>
             {children}
+            
         </ButtonStyled>
     )
 

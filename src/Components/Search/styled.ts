@@ -1,0 +1,35 @@
+import styled from "styled-components";
+
+export const ContainerSearch = styled.div`
+    display: flex;
+    border: 1px solid var(--neutro_color_200);
+    border-radius: 8px;
+    height: 35px;
+    width: 300px;
+    overflow: hidden;
+    &:focus-within{
+        border-color: var(--brand_color_300);
+    }
+`
+
+
+export const InputSearch = styled.input`
+    border: none;
+    width: 100%;
+    padding: 0 10px;
+    &:focus{
+        outline: none;
+    }
+`
+
+
+export const ButtonSearch = styled.button`
+    background-color: var(--brand_color_300);
+    border: none;
+    color: var(--neutro_color_100);
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`   
