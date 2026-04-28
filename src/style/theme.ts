@@ -1,9 +1,9 @@
 import { Colors } from "./tokens/Colors";
-import { Fonts } from "./tokens/Fonts";
+import { fontSize } from "./tokens/Fonts";
 
 const defaultTheme = {
     colors: Colors,
-    fonts: Fonts,
+    fonts: fontSize,
 }
 
 

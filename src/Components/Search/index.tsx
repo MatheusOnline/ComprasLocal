@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { ContainerSearch, ButtonSearch, InputSearch } from "./styled"
-
+import { ContainerSearch, InputSearch } from "./styled"
+import { Button } from "../Button"
 import searchIcon from "../../assets/icons/searchIcon.svg"
 
 export const Search = () => {
@@ -22,9 +22,9 @@ export const Search = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <ButtonSearch onClick={handleSearch}>
+            <Button iconOnly={true} onclick={handleSearch}>
                 <img src={searchIcon} alt="Buscar" />
-            </ButtonSearch>
+            </Button>
         </ContainerSearch>
     )
 }
