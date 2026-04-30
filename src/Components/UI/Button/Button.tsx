@@ -10,25 +10,26 @@ type props ={
     icon?: boolean;
     disabled?: boolean;
     fullWidth?: boolean;
+    onclick?: () => void;
 }
 
-function Button1({ children, type, palette, variant, disabled, fullWidth, icon }: props) {
+export function Button({ children, type, palette, variant, disabled, fullWidth, icon }: props) {
     const getClassName = useCallback(() => {
       return `$ __button-${variant} __button-${variant}-${palette} `  
     }, [palette, variant,])
 
     
     return(
-        <Button type={type} disabled={disabled} className={getClassName()} fullWidth={fullWidth} icon={icon}>
+        <ButtonStyled type={type} disabled={disabled} className={getClassName()} fullWidth={fullWidth} icon={icon}>
             {children}
-        </Button>
+        </ButtonStyled>
 
     )
 }
 
-export default Button1;
+Button.displayName = 'Button'
 
-const Button = styled.button<props>`
+const ButtonStyled = styled.button<props>`
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 4px;

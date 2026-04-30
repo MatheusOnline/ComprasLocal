@@ -1,13 +1,13 @@
-import { Header } from "../../Components/Header"
 
+import { BenefitsBar } from "../../Components/Layout/BenefitsBar/BenefitsBar"
+import { DefaultTemplate } from "../../Template/DefaultTemplate"
 
-
+import { ProductCard } from "../../Components/Features/ProductCard/ProductCard"
 export const Home = () => {
     return(
-        <div>
-            <Header />
-            
-            <h1>teste</h1>
-        </div>
+        <DefaultTemplate    >
+            <BenefitsBar />
+            <ProductCard />
+        </DefaultTemplate>
     )
 }

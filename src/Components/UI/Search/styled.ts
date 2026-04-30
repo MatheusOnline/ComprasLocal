@@ -4,8 +4,8 @@ export const ContainerSearch = styled.div`
     display: flex;
     border: 2px solid var(--neutro_color_200);
     border-radius: 8px;
-    height: 35px;
-    width: 300px;
+    height: 40px;
+    width: 350px;
     overflow: hidden;
     &:focus-within{
         border-color: var(--brand_color_300);
