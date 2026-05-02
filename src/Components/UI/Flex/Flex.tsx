@@ -11,9 +11,9 @@ type props = {
     fullWidth?: boolean;
 }
 
-export function Flex({ children, gap, justifyContent, alignItems, flexDirection }: props){
+export function Flex({ children, gap, justifyContent, alignItems, flexDirection, fullWidth }: props){
     return(
-        <FlexStyled gap={gap} justifyContent={justifyContent} alignItems={alignItems} flexDirection={flexDirection}>
+        <FlexStyled gap={gap} justifyContent={justifyContent} alignItems={alignItems} flexDirection={flexDirection} fullWidth={fullWidth}>
             {children}
         </FlexStyled>
     )

@@ -2,12 +2,12 @@
 import { BenefitsBar } from "../../Components/Layout/BenefitsBar/BenefitsBar"
 import { DefaultTemplate } from "../../Template/DefaultTemplate"
 
-import { ProductCard } from "../../Components/Features/ProductCard/ProductCard"
+import { ProductCatalog } from "../../Components/Layout/ProductCatalog/ProductCatalog"
 export const Home = () => {
     return(
         <DefaultTemplate    >
             <BenefitsBar />
-            <ProductCard />
+            <ProductCatalog />
         </DefaultTemplate>
     )
 }

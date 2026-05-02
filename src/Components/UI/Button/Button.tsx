@@ -11,16 +11,18 @@ type props ={
     disabled?: boolean;
     fullWidth?: boolean;
     onclick?: () => void;
+    maxWidth?: string;
+    maxHeight?: string;
 }
 
-export function Button({ children, type, palette, variant, disabled, fullWidth, icon }: props) {
+export function Button({ children, type, palette, variant, disabled, fullWidth, icon, maxWidth, maxHeight }: props) {
     const getClassName = useCallback(() => {
       return `$ __button-${variant} __button-${variant}-${palette} `  
     }, [palette, variant,])
 
     
     return(
-        <ButtonStyled type={type} disabled={disabled} className={getClassName()} fullWidth={fullWidth} icon={icon}>
+        <ButtonStyled type={type} disabled={disabled} className={getClassName()} fullWidth={fullWidth} icon={icon} maxWidth={maxWidth} maxHeight={maxHeight}>
             {children}
         </ButtonStyled>
 
@@ -37,6 +39,8 @@ const ButtonStyled = styled.button<props>`
     align-items: center;
     justify-content: center;
     font-size: ${({ theme }) => theme.fonts.normal};
+    max-width: ${({ maxWidth }) => maxWidth};
+    max-height: ${({ maxHeight }) => maxHeight};
 
     &.__button-contained {
         border: none;
