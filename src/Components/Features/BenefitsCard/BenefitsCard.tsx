@@ -1,30 +1,32 @@
 import styled from "styled-components"
 import { Text } from "../../UI/Text"
 
-import box from "../../../assets/icons/box.svg"
-import creditCard from "../../../assets/icons/creditCard.svg"
-import headphone from "../../../assets/icons/headphone.svg"
-import verifild from "../../../assets/icons/verifild.svg"
+
+
+import packageIcon from "@assets/Svgs/PackageNormal.svg"
+import creditCardIcon from "@assets/Svgs/CreditNormal.svg"
+import headphoneIcon from "@assets/Svgs/HeadphonesNormal.svg"
+import verifildIcon from "@assets/Svgs/TruckNormal.svg"
 
 
 const variations = {
   delivery: {
-    icon: box,
+    icon: packageIcon,
     title: "ENTREGA RÁPIDA",
     description: "Entrega 24h"
   },
   payment: {
-    icon: creditCard,
+    icon: creditCardIcon,
     title: "PAGAMENTO SEGURO",
     description: "Seu dinheiro está seguro"
   },
   support: {
-    icon: headphone,
+    icon: headphoneIcon,
     title: "SUPORTE 24/7",
     description: "Atendimento em tempo real"
   },
   refund: {
-    icon: verifild,
+    icon: verifildIcon,
     title: "DEVOLUÇÃO EM 24 HORAS",
     description: "Garantia de reembolso de 100%"
   }
@@ -59,5 +61,6 @@ const BenifitsCardStyled = styled.div`
     align-items: center;
     gap: 10px;
 `
+
 
 

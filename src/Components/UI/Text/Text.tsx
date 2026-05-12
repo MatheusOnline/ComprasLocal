@@ -4,7 +4,7 @@ import styled from "styled-components"
 type props = {
     children: ReactNode;
     fontWeight?: "normal" | "semi-bold" | "bold";
-    fontSize?: "small" | "normal" | "medium" | "large";
+    fontSize?: "extra-small" | "small" | "normal" | "medium" | "large";
     color?: "primary" | "secondary" ;
 }
 
@@ -21,21 +21,25 @@ export function Text({ children, fontWeight, fontSize, color = "primary" }: prop
 
 const TextStyled = styled.p<props>`
     &.__text-color-primary {
-        color: ${({ theme }) => theme.colors.neutro_color_400};
-}
+        color: ${({ theme }) => theme.colors.neutro_color_700};
+    }
     &.__text-color-secondary {
-        color: ${({ theme }) => theme.colors.neutro_color_300};
+        color: ${({ theme }) => theme.colors.neutro_color_500};
     }
 
-   &.__text-weight-normal {
-        font-weight: normal;
-    
-   }
+
+    &.__text-weight-normal {
+        font-weight: 300;
+    }
     &.__text-weight-semi-bold {
-        font-weight: 600;
+        font-weight: 500;
     }
     &.__text-weight-bold {
-        font-weight: bold;
+        font-weight: 700;
+    }
+
+    &.__text-scale-extra-small {
+        font-size: ${({ theme }) => theme.fonts.extra_small};
     }
 
     &.__text-scale-small {

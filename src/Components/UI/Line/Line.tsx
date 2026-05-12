@@ -15,7 +15,7 @@ export function Line({ direction = "horizontal" }: LineProps) {
 }
 
 const LineStyled = styled.div<LineProps>`
-    background-color: ${({ theme }) => theme.colors.neutro_color_200};
+    background-color: ${({ theme }) => theme.colors.neutro_color_400};
    
     &.__horizontal {
         width: 100%;

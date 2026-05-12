@@ -4,10 +4,11 @@ const Fonts = {
 }
 
 const fontSize = {
-    small: '14px',
+    extra_small: '12px',
+    small:  '14px',
     normal: '16px',
     medium: '18px',
-    large: '24px',
+    large:  '24px',
 }
 
 export { Fonts, fontSize }

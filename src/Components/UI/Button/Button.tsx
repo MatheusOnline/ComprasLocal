@@ -32,35 +32,52 @@ export function Button({ children, type, palette, variant, disabled, fullWidth, 
 Button.displayName = 'Button'
 
 const ButtonStyled = styled.button<props>`
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    
     cursor: pointer;
+    font-weight: 400;
     padding: 10px 20px;
     border-radius: 4px;
+    
     display: flex;
     align-items: center;
     justify-content: center;
+    
+    height: fit-content;
     font-size: ${({ theme }) => theme.fonts.normal};
     max-width: ${({ maxWidth }) => maxWidth};
     max-height: ${({ maxHeight }) => maxHeight};
 
+
+    //Definição de estilos para os botoes CONTAINED
     &.__button-contained {
-        border: none;
-        color: white;
+        
+        color: ${({ theme }) => theme.colors.neutro_color_200};
+        
         transition: background-color 0.3s ease;
+
         &.__button-contained-primary {
-            background: ${({ theme }) => theme.colors.brand_color_300};
+            background: ${({ theme }) => theme.colors.brand_color_400};
         
             &:hover{
-                background: ${({ theme }) => theme.colors.brand_color_400};
+                background: ${({ theme }) => theme.colors.brand_color_500};
             
+            }
+            &:active{
+                background: ${({ theme }) => theme.colors.brand_color_600};
             }
         }
 
         
         &.__button-contained-secondary {
-            background-color: ${({ theme }) => theme.colors.accent_color_300};
+            background-color: ${({ theme }) => theme.colors.secondary_color_400};
 
             &:hover{
-                background-color: ${({ theme }) => theme.colors.accent_color_400};
+                background-color: ${({ theme }) => theme.colors.secondary_color_500};
+            }
+            &:active{
+                background-color: ${({ theme }) => theme.colors.secondary_color_600};
             }
         }
 
@@ -70,61 +87,69 @@ const ButtonStyled = styled.button<props>`
             &:hover{
                 background-color: ${({ theme }) => theme.colors.neutro_color_400};
             }
+            &:active{
+                background-color: ${({ theme }) => theme.colors.neutro_color_500};
+            }
         }
 
         
     }
 
+     //Definição de estilos para os botoes OUTLINED
     &.__button-outlined {
         background: transparent;
         border: 1px solid;
         transition: background-color 0.3s ease, color 0.3s ease;
-        background-color: transparent;
+        
 
         &.__button-outlined-primary {
-            border-color: ${({ theme }) => theme.colors.brand_color_300};
-            color: ${({ theme }) => theme.colors.brand_color_300};
+            border-color: ${({ theme }) => theme.colors.brand_color_400};
+            color: ${({ theme }) => theme.colors.brand_color_400};
             
             &:hover{
                 background-color: ${({ theme }) => theme.colors.brand_color_200};
-                color: white;
+               
+            }
+            &:active{
+                background-color: ${({ theme }) => theme.colors.brand_color_300};
             }
         }
 
         &.__button-outlined-secondary {
-            border-color: ${({ theme }) => theme.colors.accent_color_300};
-            color: ${({ theme }) => theme.colors.accent_color_300};
-            
+            border-color: ${({ theme }) => theme.colors.secondary_color_400};
+            color: ${({ theme }) => theme.colors.secondary_color_400};
+
             &:hover{
-                background-color: ${({ theme }) => theme.colors.accent_color_200};
-                color: white;
+                background-color: ${({ theme }) => theme.colors.secondary_color_200};
+                
+            }
+            &:active{
+                background-color: ${({ theme }) => theme.colors.secondary_color_300};
             }
         }
 
         &.__button-outlined-neutral {
-            border-color: ${({ theme }) => theme.colors.neutro_color_300};
-            color: ${({ theme }) => theme.colors.neutro_color_300}; 
+            border-color: ${({ theme }) => theme.colors.neutro_color_500};
+            color: ${({ theme }) => theme.colors.neutro_color_500}; 
 
             &:hover{
-                background-color: ${({ theme }) => theme.colors.neutro_color_200};
-                color: white;
+                background-color: ${({ theme }) => theme.colors.neutro_color_300};
+                
+            }
+            &:active{
+                background-color: ${({ theme }) => theme.colors.neutro_color_400};
             }
         }
     }
-
-    &.__button-icon{
-        background: transparent;
-    }
-
 
     ${({ fullWidth }) => fullWidth && css`
             width: 100%;
         `}
 
     ${({ disabled }) => disabled && css`
-        opacity: 0.70;
-        cursor: not-allowed ;
+        opacity: 0.40;
         pointer-events: none;
+        cursor: not-allowed ;
     `}
 
     ${({ icon }) => icon && css`
