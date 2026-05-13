@@ -6,7 +6,7 @@ import { Footer } from "@components/Features/Fooster/Footer"
 
 export function DefaultTemplate({ children }: { children: React.ReactNode }) {
     return (
-        <div>
+        <Layout>
             <Header />
             <br />
             <br />
@@ -18,13 +18,20 @@ export function DefaultTemplate({ children }: { children: React.ReactNode }) {
             <br />
             <br />
             <Footer />
-        </div>
+        </Layout>
     )
 }
+
+const Layout = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+`
 
 const ContainerdefaultTemplate = styled.div`
     width: 85%;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    flex: 1;
 `

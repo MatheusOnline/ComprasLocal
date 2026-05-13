@@ -5,15 +5,17 @@ type props = {
     children: ReactNode;
     fontWeight?: "normal" | "semi-bold" | "bold";
     fontSize?: "extra-small" | "small" | "normal" | "medium" | "large";
-    color?: "primary" | "secondary" ;
+    color?: "primary" | "secondary" | "white" ;
     truncate?: boolean
+    maxWidth?: string
+    underline?: boolean
 }
 
-export function Text({ children, fontWeight, fontSize, color = "primary" , truncate = false }: props) {
+export function Text({ children, fontWeight, fontSize, color = "primary" , truncate = false, maxWidth, underline = false }: props) {
     const className = `__text-weight-${fontWeight} __text-scale-${fontSize} __text-color-${color} `
 
     return(
-        <TextStyled fontWeight={fontWeight} fontSize={fontSize}  className={className}  truncate={truncate}>
+        <TextStyled fontWeight={fontWeight} fontSize={fontSize}  className={className}  truncate={truncate} maxWidth={maxWidth} underline={underline}>
             {children}
         </TextStyled>
     )
@@ -21,6 +23,8 @@ export function Text({ children, fontWeight, fontSize, color = "primary" , trunc
 }
 
 const TextStyled = styled.p<props>`
+    max-width: ${({ maxWidth }) => maxWidth || "100%"};
+
     ${({ truncate }) =>
         truncate &&
         `
@@ -30,11 +34,20 @@ const TextStyled = styled.p<props>`
         max-width: 100%;
     `}
 
+    ${({ underline }) =>
+        underline &&
+        `
+        text-decoration: underline;
+    `}
+
     &.__text-color-primary {
         color: ${({ theme }) => theme.colors.neutro_color_700};
     }
     &.__text-color-secondary {
         color: ${({ theme }) => theme.colors.neutro_color_500};
+    }
+    &.__text-color-white {
+        color: ${({ theme }) => theme.colors.neutro_color_200};
     }
 
 
@@ -64,4 +77,6 @@ const TextStyled = styled.p<props>`
     &.__text-scale-large {
         font-size: ${({ theme }) => theme.fonts.large};
     }
+
+    
 `

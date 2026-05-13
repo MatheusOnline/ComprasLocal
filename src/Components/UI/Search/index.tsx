@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ContainerSearch, InputSearch } from "./styled"
-import SearchIcon from "@assets/Svgs/Seachnormal.svg"
+import SearchIcon from "@assets/Svgs/SeachNormal.svg"
 
 import { Button } from "../Button"
 
