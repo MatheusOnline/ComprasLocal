@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ContainerSearch, InputSearch } from "./styled"
+import SearchIcon from "@assets/Svgs/Seachnormal.svg"
 
-import searchIcon from "../../../assets/icons/searchIcon.svg"
 import { Button } from "../Button"
 
 
@@ -25,7 +25,7 @@ export const Search = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
             <Button variant="contained" palette="primary" icon={true} onclick={handleSearch}>
-                <img src={searchIcon} alt="Buscar" />
+                <img src={SearchIcon} alt="Buscar" />
             </Button>
         </ContainerSearch>
     )

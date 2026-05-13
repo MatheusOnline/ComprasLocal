@@ -40,7 +40,7 @@ export function Grid({
 const GridStyled = styled.div<props>`
   display: grid;
 
-  grid-template-columns: ${({ columns }) => columns || "repeat(3, 1fr)"};
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   grid-template-rows: ${({ rows }) => rows};
 
   justify-content: ${({ justifyContent }) => justifyContent || "start"};

@@ -1,6 +1,9 @@
 import styled from "styled-components"
-import { Header } from "../Components/Layout/Header/Header"
 import { Flex } from "../Components/UI/Flex/Flex"
+
+import { Header } from "../Components/Layout/Header/Header"
+import { Footer } from "@components/Features/Fooster/Footer"
+
 export function DefaultTemplate({ children }: { children: React.ReactNode }) {
     return (
         <div>
@@ -12,6 +15,9 @@ export function DefaultTemplate({ children }: { children: React.ReactNode }) {
                     {children}
                 </ContainerdefaultTemplate>
             </Flex>
+            <br />
+            <br />
+            <Footer />
         </div>
     )
 }

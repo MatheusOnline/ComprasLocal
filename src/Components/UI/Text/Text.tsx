@@ -6,13 +6,14 @@ type props = {
     fontWeight?: "normal" | "semi-bold" | "bold";
     fontSize?: "extra-small" | "small" | "normal" | "medium" | "large";
     color?: "primary" | "secondary" ;
+    truncate?: boolean
 }
 
-export function Text({ children, fontWeight, fontSize, color = "primary" }: props) {
+export function Text({ children, fontWeight, fontSize, color = "primary" , truncate = false }: props) {
     const className = `__text-weight-${fontWeight} __text-scale-${fontSize} __text-color-${color} `
 
     return(
-        <TextStyled fontWeight={fontWeight} fontSize={fontSize}  className={className}>
+        <TextStyled fontWeight={fontWeight} fontSize={fontSize}  className={className}  truncate={truncate}>
             {children}
         </TextStyled>
     )
@@ -20,6 +21,15 @@ export function Text({ children, fontWeight, fontSize, color = "primary" }: prop
 }
 
 const TextStyled = styled.p<props>`
+    ${({ truncate }) =>
+        truncate &&
+        `
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    `}
+
     &.__text-color-primary {
         color: ${({ theme }) => theme.colors.neutro_color_700};
     }
