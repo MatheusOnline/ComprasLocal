@@ -1,10 +1,10 @@
-import Banner1 from "@assets/Banner/Banner.png"
+import Banner from "@assets/Banner/Banner.png"
 import styled from "styled-components";
 
 export function Carrosel() {
     return(
        <CarroselStyled>
-        <img src={Banner1} alt="" />
+        <img src={Banner} alt="" />
 
        </CarroselStyled>
     )
