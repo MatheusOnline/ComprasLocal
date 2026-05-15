@@ -5,7 +5,7 @@ type props = {
     children: ReactNode;
     fontWeight?: "normal" | "semi-bold" | "bold";
     fontSize?: "extra-small" | "small" | "normal" | "medium" | "large";
-    color?: "primary" | "secondary" | "white" ;
+    color?: "primary" | "secondary" | "white" | "brand";
     truncate?: boolean
     maxWidth?: string
     underline?: boolean
@@ -49,7 +49,9 @@ const TextStyled = styled.p<props>`
     &.__text-color-white {
         color: ${({ theme }) => theme.colors.neutro_color_200};
     }
-
+    &.__text-color-brand {
+        color: ${({ theme }) => theme.colors.brand_color_400};
+    }
 
     &.__text-weight-normal {
         font-weight: 300;

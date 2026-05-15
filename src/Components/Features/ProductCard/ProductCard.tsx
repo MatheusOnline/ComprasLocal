@@ -8,6 +8,8 @@ import { Assessment } from "../../UI/Assessment/Assessment"
 import CartIcon from "./../../../Assets/Svgs/CartNormal.svg"
 
 
+import { useNavigate } from "react-router-dom"
+
 
 type props = {
     ratting: number;
@@ -15,13 +17,25 @@ type props = {
     title: string;
     store: string;
     imgSrc: string;    
+    id: string;
+    category?: string;
+}
 
+function createSlug(text: string) {
+    return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
 }
 
 
-export function ProductCard({ ratting, price, title, store, imgSrc }: props) {
+export function ProductCard({ ratting, price, title, store, imgSrc, id, category }: props) {
+    const navigate = useNavigate()
+
     return(
-        <CardStyled>
+        <CardStyled onClick={() => navigate(`/product/${category}/${createSlug(title)}/${id}`)}>
             <Flex flexDirection="column"  gap="5px" alignItems="center">
                 
                 <Flex fullWidth={true} justifyContent="space-between" alignItems="center">

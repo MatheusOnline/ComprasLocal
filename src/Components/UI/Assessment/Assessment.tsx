@@ -17,7 +17,7 @@ export function Assessment({ value }: AssessmentProps) {
       <StarsFill style={{ width: `${percentage}%` }}>
         ★★★★★
       </StarsFill>
-
+    
     </Wrapper>
       <Text fontSize="extra-small">({value})</Text>
   </AssessmentStyled>
