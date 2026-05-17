@@ -10,7 +10,7 @@ type props ={
     icon?: boolean;
     disabled?: boolean;
     fullWidth?: boolean;
-    onclick?: () => void;
+    onclick?:  React.MouseEventHandler<HTMLButtonElement>;
     maxWidth?: string;
     maxHeight?: string;
 }
@@ -37,7 +37,7 @@ const ButtonStyled = styled.button<props>`
     
     cursor: pointer;
     font-weight: 400;
-    padding: 10px 20px;
+    font-size: clamp(12px, 1.2vw, 14px);
     border-radius: 4px;
     
     display: flex;
@@ -45,7 +45,8 @@ const ButtonStyled = styled.button<props>`
     justify-content: center;
     
     height: fit-content;
-    font-size: ${({ theme }) => theme.fonts.normal};
+    padding: clamp(6px, 1vw, 10px) clamp(10px, 2vw, 16px);
+   
     max-width: ${({ maxWidth }) => maxWidth};
     max-height: ${({ maxHeight }) => maxHeight};
 

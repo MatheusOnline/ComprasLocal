@@ -1,0 +1,10 @@
+Button tem  que ter {
+    children: react node
+    Palette: Primary, secondary, neutral,
+    variant: text, contained, icon 
+    disabled: true/false
+    type: button, submit, reset
+    fullWidth true/false   
+
+
+}

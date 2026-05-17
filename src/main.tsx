@@ -7,6 +7,11 @@ import defaultTheme from './style/theme.ts'
 
 import { AppRoutes } from './appRouters.tsx'
 
+
+// Provider 
+
+
+
 import './index.css'
 
 
@@ -17,7 +22,8 @@ createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <GlobalStyle/>
       <ThemeProvider theme={defaultTheme}>
-        <AppRoutes />
+          <AppRoutes />
+       
       </ThemeProvider>
     </StrictMode>
 )

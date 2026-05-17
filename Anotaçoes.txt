@@ -1,8 +1,21 @@
-Link na logo
+Finalizar o header 
+    Difente telas 
+    quantidade no carrinho 
+    hooks de login 
+
+    
+
+
+
+Paginad e pesquisa 
+    Filtros 
+    pedi
+
 Carrosel 
 Pagina dinamica Confome o despositivo 
     - Carrosel
     - Grid Produtos 
 
-Skeloton 
-Promoçao 
+
+Use hooks - to fazendo ao pouco 
+

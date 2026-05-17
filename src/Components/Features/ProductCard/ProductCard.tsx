@@ -7,8 +7,10 @@ import { Assessment } from "../../UI/Assessment/Assessment"
 
 import CartIcon from "./../../../Assets/Svgs/CartNormal.svg"
 
+import { useCart } from "../../../hooks/useCart"
 
 import { useNavigate } from "react-router-dom"
+import type React from "react"
 
 
 type props = {
@@ -19,6 +21,7 @@ type props = {
     imgSrc: string;    
     id: string;
     category?: string;
+    discount?: number;
 }
 
 function createSlug(text: string) {
@@ -31,8 +34,15 @@ function createSlug(text: string) {
 }
 
 
-export function ProductCard({ ratting, price, title, store, imgSrc, id, category }: props) {
+export function ProductCard({ ratting, price, title, store, imgSrc, id, category, discount }: props) {
     const navigate = useNavigate()
+    const cart = useCart()
+    function AddCart(e: React.MouseEvent){
+        e.stopPropagation();
+        
+        cart.addItem(Number(id))
+
+    }
 
     return(
         <CardStyled onClick={() => navigate(`/product/${category}/${createSlug(title)}/${id}`)}>
@@ -54,8 +64,16 @@ export function ProductCard({ ratting, price, title, store, imgSrc, id, category
                 </Flex>
                 
                 <Flex fullWidth={true} justifyContent="space-between" alignItems="end">
+
+                    {discount ? (
+                    <Flex gap="1px" alignItems="end">
+                        <Text fontWeight="semi-bold" fontSize="medium">R${(price * (1 - discount / 100)).toFixed(2)}</Text>
+                        <Text  fontWeight="normal" fontSize="extra-small" color="secondary" through={true}>R${price.toFixed(2)}</Text>
+                    </Flex>
+                    ):(
                     <Text fontWeight="semi-bold" fontSize="medium">R${price.toFixed(2)}</Text>
-                    <Button variant="contained" palette="primary" icon={true}><img src={CartIcon} alt="" /></Button>
+                    )} 
+                    <Button variant="contained" palette="primary" icon={true} onclick={ AddCart}><img src={CartIcon} alt="" /></Button>
                 </Flex>
             </Flex>
         </CardStyled>

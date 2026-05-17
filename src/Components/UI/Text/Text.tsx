@@ -9,13 +9,14 @@ type props = {
     truncate?: boolean
     maxWidth?: string
     underline?: boolean
+    through?: boolean
 }
 
-export function Text({ children, fontWeight, fontSize, color = "primary" , truncate = false, maxWidth, underline = false }: props) {
+export function Text({ children, fontWeight, fontSize, color = "primary" , truncate = false, maxWidth, underline = false, through}: props) {
     const className = `__text-weight-${fontWeight} __text-scale-${fontSize} __text-color-${color} `
 
     return(
-        <TextStyled fontWeight={fontWeight} fontSize={fontSize}  className={className}  truncate={truncate} maxWidth={maxWidth} underline={underline}>
+        <TextStyled fontWeight={fontWeight} fontSize={fontSize}  className={className}  truncate={truncate} maxWidth={maxWidth} underline={underline} through={through}>
             {children}
         </TextStyled>
     )
@@ -24,7 +25,7 @@ export function Text({ children, fontWeight, fontSize, color = "primary" , trunc
 
 const TextStyled = styled.p<props>`
     max-width: ${({ maxWidth }) => maxWidth || "100%"};
-
+    
     ${({ truncate }) =>
         truncate &&
         `
@@ -38,6 +39,12 @@ const TextStyled = styled.p<props>`
         underline &&
         `
         text-decoration: underline;
+    `}
+
+    ${({ through }) =>
+        through &&
+        `
+        text-decoration: line-through;
     `}
 
     &.__text-color-primary {
