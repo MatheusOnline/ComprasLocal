@@ -10,6 +10,9 @@ export function DefaultTemplate({ children }: { children: React.ReactNode }) {
             <Header />
             <br />
             <br />
+            <br />
+            <br />
+
             <Flex flexDirection="column" alignItems="center" gap="2rem"  fullWidth={true} >
                 <ContainerdefaultTemplate >
                     {children}
