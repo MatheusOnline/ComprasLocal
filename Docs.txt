@@ -1,10 +1,5 @@
-Button tem  que ter {
-    children: react node
-    Palette: Primary, secondary, neutral,
-    variant: text, contained, icon 
-    disabled: true/false
-    type: button, submit, reset
-    fullWidth true/false   
-
-
-}
+Componentes
+    UI = Todos os elementos simples 
+    Fetures = Conjunto de UI
+    Layout  = Conjuntos de Features layout vai ter que ter skelton
+    

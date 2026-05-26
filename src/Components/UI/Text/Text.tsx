@@ -40,7 +40,7 @@ const TextStyled = styled.p<props>`
         `
         text-decoration: underline;
     `}
-
+    
     ${({ through }) =>
         through &&
         `

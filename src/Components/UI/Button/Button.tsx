@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 type props ={
     children: ReactNode;
     type?: "submit" | "reset" | "button";
-    palette?: "primary" | "secondary" | "neutral";
+    palette?: "primary" | "secondary" | "neutral" | "danger";
     variant?: "contained" | "outlined" | "text" ;
     icon?: boolean;
     disabled?: boolean;
@@ -82,6 +82,7 @@ const ButtonStyled = styled.button<props>`
             }
         }
 
+
         &.__button-contained-neutral {
             background-color: ${({ theme }) => theme.colors.neutro_color_300};
         
@@ -93,6 +94,10 @@ const ButtonStyled = styled.button<props>`
             }
         }
 
+
+        &.__button-contained-danger {
+             background-color: ${({ theme }) => theme.colors.feedback_color_red};
+        }
         
     }
 

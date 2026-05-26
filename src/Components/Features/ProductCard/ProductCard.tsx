@@ -4,25 +4,13 @@ import { Flex } from "../../UI/Flex"
 import { Text } from "../../UI/Text"
 import { Like } from "../../UI/Like/Like"
 import { Assessment } from "../../UI/Assessment/Assessment"
-
 import CartIcon from "./../../../Assets/Svgs/CartNormal.svg"
-
 import { useCart } from "../../../hooks/useCart"
-
 import { useNavigate } from "react-router-dom"
-import type React from "react"
+import type { CardProductProps } from "../../../types/types"
 
 
-type props = {
-    ratting: number;
-    price: number;
-    title: string;
-    store: string;
-    imgSrc: string;    
-    id: string;
-    category?: string;
-    discount?: number;
-}
+
 
 function createSlug(text: string) {
     return text
@@ -34,7 +22,7 @@ function createSlug(text: string) {
 }
 
 
-export function ProductCard({ ratting, price, title, store, imgSrc, id, category, discount }: props) {
+export function ProductCard({ ratting, price, title, store, imgSrc, id, category, discount }: CardProductProps) {
     const navigate = useNavigate()
     const cart = useCart()
     function AddCart(e: React.MouseEvent){

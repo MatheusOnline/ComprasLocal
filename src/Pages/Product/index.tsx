@@ -1,18 +1,15 @@
 import { DefaultTemplate } from "../../Template/DefaultTemplate"
-import {useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { Flex } from "../../Components/UI/Flex"
 import { Text } from "@components/UI/Text"
 import { Accordion } from "@components/UI/Accordion"
 import { ScrollToTop } from "@components/UI/ScrollToTop"
-
 import { Breadcrumbs } from "../../Components/UI/Breadcrumb"
-import { BreadcrumbsSkeleton } from "@components/UI/Breadcrumb/BreadcrumbsSkeleton"
 import {ImagePreview} from "../../Components/Features/ImagePreview"
-import { ImagePreviewSkeleton } from "@components/Features/ImagePreview/ImagePreviewSkeleton"
-import { ProductInfo } from "@components/Features/ProductInfo"
-import { ProductInfoSkeleton } from "@components/Features/ProductInfo/ProductInfoSkeleton"
+import { ProductInfo } from "@components/Layout/ProductInformation"
+
+import { useProduct } from "../../hooks/useProductsData"
 
 
 
@@ -20,52 +17,26 @@ import { ProductInfoSkeleton } from "@components/Features/ProductInfo/ProductInf
 
 const ProductPage = () =>{
     const { category, slug, id } = useParams();    
-    const [product, setProduct] = useState<any>(null);
-
-    
-    useEffect(() => {
-
-        console.log("ID:", id);
-
-        fetch(`https://dummyjson.com/products/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log("Fetched Product:", data);
-
-                setProduct(data);
-            });
-
-    }, [id]);
+    const {data, isLoading } = useProduct(Number(id))
     
     
-
     return(
         <DefaultTemplate>
-            <ScrollToTop/>
-            {product ? (
-                <Breadcrumbs category={category || ''} name={slug || ''} />
-
-            ) : (
-                <BreadcrumbsSkeleton/>
-            )}
+            <ScrollToTop/> 
+            
+            <Breadcrumbs isLoading={isLoading} category={category || ''} name={slug || ''} />
+            
             <Flex gap="62px" >
                 {/* Imagems do produto */}
-                {product ? (
-                    <ImagePreview images={product?.images} />
-                ) : (
-                    <ImagePreviewSkeleton />
-                )}
-
+                <ImagePreview isLoading={isLoading} images={data?.images} />
+                
                 {/* Informacoes produto */}
-                {product ? (
-                    <ProductInfo product={product} />
-                ) : (
-                    <ProductInfoSkeleton />
-                )}
+                <ProductInfo isLoading={isLoading} product={data} />
+                                 
             </Flex>
             <Accordion title="Detalhes do produto">
                 <Text fontSize="small" color="secondary">
-                    {product?.description}
+                    {data?.description}
                 </Text>
             </Accordion>
         </DefaultTemplate>

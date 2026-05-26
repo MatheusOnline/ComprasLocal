@@ -2,14 +2,22 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Text } from '../Text';
 import { Flex } from '../Flex';
+import { BreadcrumbsSkeleton } from './BreadcrumbsSkeleton';
+
+
 type BreadcrumbItem = {
   category: string;
   name: string;
+  isLoading: boolean
 }
 
-export const Breadcrumbs = ({ category, name }: BreadcrumbItem ) => {
+export const Breadcrumbs = ({ category, name, isLoading }: BreadcrumbItem ) => {
 
-
+  if(isLoading){
+    return(
+      <BreadcrumbsSkeleton/>
+    )
+  }
 
   return (
     <Flex gap="8px" alignItems="center" >
