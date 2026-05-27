@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { DefaultTemplate } from "../../Template/DefaultTemplate";
 import { useProductSearch } from "../../hooks/useProductsSearchData";
 import { CatalogProducts } from "@components/Layout/CatalogProducts";
-import { Filter } from "@components/UI/Filters";
+//import { Filter } from "@components/UI/Filters";
 import { Text } from "@components/UI/Text";
 
 import { Flex } from "@components/UI/Flex";
