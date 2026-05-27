@@ -1,18 +1,25 @@
+import styled from "styled-components"
 import { CartItemCard } from "@components/Features/CartItemCard/CartItemCard"
 import type { CartItemProps } from "../../../types/types"
-
-import styled from "styled-components"
+import { CartcatalogSkeleton } from "./CartcatalogSkeleton"
 
 type CartCatalogProps = {
     items: CartItemProps[]
+    isLoading: boolean
 }
 
-export const CartCatalog = ({items}: CartCatalogProps) => {
-    
+export const CartCatalog = ({items, isLoading}: CartCatalogProps) => {
+    if(isLoading){
+        return(
+            <CartcatalogSkeleton/>
+        )
+    }    
+
+
     return(
         <Container>
             {
-            items.map((item) => (
+            items?.map((item) => (
                 <CartItemCard 
                     key={item.id}
                     id={item.id}
@@ -33,7 +40,7 @@ const Container = styled.div`
     width: 90%;
     display: flex;
     flex-direction: column;
-    border-radius: 12px;
+    border-radius: 4px;
     padding: 20px;
     border: 1px solid #ccc;
     gap: 10px;

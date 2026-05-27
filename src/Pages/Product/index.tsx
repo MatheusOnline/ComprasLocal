@@ -19,12 +19,15 @@ const ProductPage = () =>{
     const { category, slug, id } = useParams();    
     const {data, isLoading } = useProduct(Number(id))
     
+    const paths = [
+        String(category)
+    ]
     
     return(
         <DefaultTemplate>
             <ScrollToTop/> 
             
-            <Breadcrumbs isLoading={isLoading} category={category || ''} name={slug || ''} />
+            <Breadcrumbs isLoading={isLoading} path={paths || ''} label={slug || ''} />
             
             <Flex gap="62px" >
                 {/* Imagems do produto */}

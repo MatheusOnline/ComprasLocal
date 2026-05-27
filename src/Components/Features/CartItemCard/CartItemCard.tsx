@@ -17,7 +17,7 @@ export const CartItemCard =({id, title, store, price, thumbnail, quantity}: Cart
             <Flex flexDirection="column" gap="0.5rem" fullWidth={true} justifyContent="space-between">
                 <Flex flexDirection="row" justifyContent="space-between" alignItems="center" fullWidth={true}>
                     <div>
-                        <Text fontSize="medium" fontWeight="bold">{title}</Text>
+                        <Text fontSize="medium" fontWeight="semi-bold">{title}</Text>
                         <p>{store}</p>
                     </div>
                     <Text fontSize="medium" fontWeight="semi-bold">R${price}</Text>
@@ -37,9 +37,10 @@ const Imagen = styled.img`
 `
 
 const Container = styled.div`
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     display: flex;
     flex-direction: row;
-    border-radius: 12px;
+    border-radius: 4px;
     padding: 5px 10px;
     border: 1px solid #ccc;
     gap: 10px;

@@ -21,10 +21,10 @@ export const GuestActions = () => {
                     <ButtonStyled to="profile"  >
                         <img src={IconUser} alt="User" />
                     </ButtonStyled>
-                    <ButtonStyled  to="favorite" >
+                    <ButtonStyled  to="/favorites" >
                         <img src={IconLike} alt="Like" />
                     </ButtonStyled>
-                    <CartWrapper  to="cart" >
+                    <CartWrapper  to="/cart" >
                         <img src={IconCart} alt="Cart" />
                         <CartBadge>{cart.item.length}</CartBadge>
                     </CartWrapper>

@@ -3,12 +3,24 @@ import { Flex } from "@components/UI/Flex"
 import { Button } from "@components/UI/Button"
 //import { Text } from "@components/UI/Text"
 import { Line } from "@components/UI/Line"
+import { Text } from "@components/UI/Text"
+import { CartSummarySkeleton } from "./CartSummarySkeleton"
 
+type CartSummartProps = {
+    isLoading: boolean
+}
 
-export const CartSummary = () => {
+export const CartSummary = ({isLoading}:CartSummartProps) => {
+
+    if(isLoading){
+        return(
+            <CartSummarySkeleton/>
+        )
+    }
+
     return(
         <ContainerStyled>
-            <h2>Resumo do pedido</h2>
+            <Text fontSize="large" fontWeight="semi-bold">Resumo do pedido</Text>
             <Flex gap="10px" flexDirection="column">
                 <Flex flexDirection="row" justifyContent="space-between">
                     <p>Subtotal</p>
