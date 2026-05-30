@@ -9,7 +9,7 @@ import { ShopCard } from "../../Features/ShopCard"
 import { ProductPrice } from "./ProductPrice"
 import { ProductInfoSkeleton } from "./ProductInfoSkeleton"
 import type { ProductInformationProps } from "../../../types/types"
-
+import { useState } from "react"
 
 type ProductInfoProps = {
     product: ProductInformationProps;
@@ -19,7 +19,7 @@ type ProductInfoProps = {
 
 export const ProductInfo = ({ product, isLoading }: ProductInfoProps) => {
     const cart = useCart()
-
+    const [value , setValue] = useState(1)
     if(isLoading){
         return(
             <ProductInfoSkeleton/>
@@ -50,7 +50,7 @@ export const ProductInfo = ({ product, isLoading }: ProductInfoProps) => {
                 {/*Comprar | Quantidade | Carrinho */}
                 <Flex gap="26px" flexDirection="column" >
                     <Flex gap="8px" alignItems="center" >
-                        <Stepper />
+                        <Stepper value={value} onChange={setValue} />
                         <Button variant="contained" palette="primary" fullWidth>Comprar agora</Button>
                     </Flex>
                     

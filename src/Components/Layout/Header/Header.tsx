@@ -8,14 +8,17 @@ import { Search } from '../../UI/Search'
 import { LoggedActions } from "./LoggedActions"
 import { GuestActions } from "./GuestActions"
 
+
 export const Header = () => {
     
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    
 
     //FUNCAÇÃO PARA MUDAR OS BOTOES DE ACOES DEPENDENDO SE TA LOGADO OU NAO
     const getActions = (isLoggedIn: boolean) => {
         if (isLoggedIn) return <LoggedActions />;
         return <GuestActions />;
+        setIsLoggedIn(false)
     };
 
     return(

@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { DefaultTemplate } from "../../Template/DefaultTemplate";
 import { useProductSearch } from "../../hooks/useProductsSearchData";
 import { CatalogProducts } from "@components/Layout/CatalogProducts";
+
 import { FiltersMenu } from "@components/Layout/FiltersBar";
 import { Text } from "@components/UI/Text";
 import { Breadcrumbs } from "@components/UI/Breadcrumb";
