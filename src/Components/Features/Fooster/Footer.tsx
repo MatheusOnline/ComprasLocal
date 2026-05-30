@@ -68,6 +68,7 @@ const FooterStyled = styled.footer`
     padding: 20px 7%;
     justify-content: space-between;
     display: flex;
-    
+    margin-bottom: 0px;
+    margin-top: auto;
 `
 

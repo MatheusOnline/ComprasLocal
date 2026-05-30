@@ -26,7 +26,7 @@ export function DefaultTemplate({ children }: { children: React.ReactNode }) {
 }
 
 const Layout = styled.div`
-  min-height: 100vh;
+  min-height: 120vh;
   display: flex;
   flex-direction: column;
 `

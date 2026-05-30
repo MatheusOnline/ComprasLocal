@@ -11,7 +11,6 @@ import { AppRoutes } from './appRouters.tsx'
 
 
 
-import './index.css'
 
 const client = new QueryClient()
 

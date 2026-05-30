@@ -5,13 +5,15 @@ import { Button } from "@components/UI/Button"
 import { Line } from "@components/UI/Line"
 import { Text } from "@components/UI/Text"
 import { CartSummarySkeleton } from "./CartSummarySkeleton"
+import { useNavigate } from "react-router-dom"
 
 type CartSummartProps = {
     isLoading: boolean
+    isEnabled?: boolean
 }
 
-export const CartSummary = ({isLoading}:CartSummartProps) => {
-
+export const CartSummary = ({isLoading, isEnabled}:CartSummartProps) => {
+    const navigate = useNavigate()
     if(isLoading){
         return(
             <CartSummarySkeleton/>
@@ -39,7 +41,7 @@ export const CartSummary = ({isLoading}:CartSummartProps) => {
                     <p>Total</p>
                     <p>R$113,00</p>
                 </Flex>
-                <Button fullWidth={true} variant="contained" palette="primary">Finalizar Compra</Button>
+                <Button disabled={isEnabled} fullWidth={true} variant="contained" palette="primary" onclick={() => {navigate("/payment/checkout")}}>Finalizar Compra</Button>
             </Flex>
         </ContainerStyled>
     )
