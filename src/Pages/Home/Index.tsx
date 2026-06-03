@@ -15,9 +15,7 @@ export const Home = () => {
             <CatalogBanners />
             <BenefitsBar />
             
-            <Text fontSize="large" color="primary" maxWidth="450px" underline={true}>
-                Principais Categorias
-            </Text>
+            
             <CategoryBar />
 
             <Text fontSize="large" color="primary" maxWidth="450px" underline={true}>

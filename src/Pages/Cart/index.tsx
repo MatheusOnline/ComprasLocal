@@ -17,7 +17,7 @@ const CartPage = () =>{
             
             <Flex flexDirection="row"  gap="10px" fullWidth={true}>
                 <CartCatalog items={data} isLoading={isLoading}/>
-                <CartSummary isLoading={isLoading} />
+                <CartSummary isLoading={isLoading} redirect="/payment/checkout"/>
             </Flex>
             
 

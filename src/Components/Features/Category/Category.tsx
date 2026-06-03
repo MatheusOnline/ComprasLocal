@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Text } from "../Text/Text";
+import { useNavigate } from "react-router-dom";
+import { Text } from "../../UI/Text/Text";
 
 //icons
 import Camera from "@assets/Svgs/Category/Camera.svg"
@@ -37,6 +38,7 @@ type CategoryProps = {
 };
 
 export function Category({ name = "eletronic" }: CategoryProps) {
+  const navigate = useNavigate()
   const categoryData = categories.find(
     (cat) => cat.name === name
   );
@@ -44,7 +46,7 @@ export function Category({ name = "eletronic" }: CategoryProps) {
   if (!categoryData) return null;
 
   return (
-    <CategoryStyled>
+    <CategoryStyled onClick={() => navigate(`/search?category=${name}`)}>
       <img src={categoryData.svg} alt={categoryData.title} />
 
       <Text

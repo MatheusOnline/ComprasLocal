@@ -10,8 +10,6 @@ export function DefaultTemplate({ children }: { children: React.ReactNode }) {
             <Header />
             <br />
             <br />
-            <br />
-            <br />
 
             <Flex flexDirection="column" alignItems="center" gap="2rem"  fullWidth={true} >
                 <ContainerdefaultTemplate >
@@ -25,11 +23,17 @@ export function DefaultTemplate({ children }: { children: React.ReactNode }) {
     )
 }
 
+
+
+
 const Layout = styled.div`
   min-height: 120vh;
   display: flex;
   flex-direction: column;
+
+  
 `
+
 
 const ContainerdefaultTemplate = styled.div`
     width: 85%;
@@ -37,4 +41,9 @@ const ContainerdefaultTemplate = styled.div`
     flex-direction: column;
     gap: 2rem;
     flex: 1;
+    
+
+     @media (min-width: 1496px) {
+          width: 75%;
+    }
 `

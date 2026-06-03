@@ -94,7 +94,7 @@ const Checkout = () => {
 
         </ContainerTopics>
 
-        <CartSummary isLoading={isLoading} isEnabled={enabled()}/>
+        <CartSummary isLoading={isLoading} isEnabled={enabled()} redirect="/payment/pix"/>
 
       </Flex>
     </DefaultTemplate>

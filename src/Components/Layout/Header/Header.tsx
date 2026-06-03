@@ -41,7 +41,8 @@ const ContainerHeader = styled.header`
     justify-content: space-between;
     padding: clamp(12px, 1vw, 50px) clamp(12px, 1vw, 50px);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
+    position: sticky;
+    top: 0;
     background-color: #FFFFFF;
     z-index: 1000;
 `

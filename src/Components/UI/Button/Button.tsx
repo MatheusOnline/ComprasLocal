@@ -148,6 +148,51 @@ const ButtonStyled = styled.button<props>`
         }
     }
 
+    //Definiçao de estilo para os botoes TEXT
+    &.__button-text {
+        background-color: transparent;
+        border: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+
+         &.__button-text-primary {
+            
+            color: ${({ theme }) => theme.colors.brand_color_400};
+            
+            &:hover{
+                color: ${({ theme }) => theme.colors.brand_color_200};
+               
+            }
+            &:active{
+                color: ${({ theme }) => theme.colors.brand_color_300};
+            }
+        }
+
+
+         &.__button-text-secondary {
+            color: ${({ theme }) => theme.colors.secondary_color_400};
+
+            &:hover{
+                color: ${({ theme }) => theme.colors.secondary_color_500};
+            }
+            &:active{
+                color: ${({ theme }) => theme.colors.secondary_color_600};
+            }
+        }
+
+
+        &.__button-text-neutral {
+            color: ${({ theme }) => theme.colors.neutro_color_300};
+        
+            &:hover{
+                color: ${({ theme }) => theme.colors.neutro_color_400};
+            }
+            &:active{
+                color: ${({ theme }) => theme.colors.neutro_color_500};
+            }
+        }
+
+    }
+
     ${({ fullWidth }) => fullWidth && css`
             width: 100%;
         `}

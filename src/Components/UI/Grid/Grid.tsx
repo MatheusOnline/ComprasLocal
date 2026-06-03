@@ -40,7 +40,7 @@ export function Grid({
 const GridStyled = styled.div<props>`
   display: grid;
 
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   grid-template-rows: ${({ rows }) => rows};
 
   justify-content: ${({ justifyContent }) => justifyContent || "start"};
@@ -53,4 +53,15 @@ const GridStyled = styled.div<props>`
     css`
       width: 100%;
     `}
+
+
+    
+
+    @media (max-width: 1024px) {
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
 `

@@ -54,9 +54,9 @@ export function ProductCard({ ratting, price, title, store, imgSrc, id, category
                 <Flex fullWidth={true} justifyContent="space-between" alignItems="end">
 
                     {discount ? (
-                    <Flex gap="1px" alignItems="end">
+                    <Flex gap="1px" alignItems="start" flexDirection="column">
+                        <Text  fontWeight="normal" fontSize="small" color="secondary" through={true}>R${price.toFixed(2)}</Text>
                         <Text fontWeight="semi-bold" fontSize="medium">R${(price * (1 - discount / 100)).toFixed(2)}</Text>
-                        <Text  fontWeight="normal" fontSize="extra-small" color="secondary" through={true}>R${price.toFixed(2)}</Text>
                     </Flex>
                     ):(
                     <Text fontWeight="semi-bold" fontSize="medium">R${price.toFixed(2)}</Text>
