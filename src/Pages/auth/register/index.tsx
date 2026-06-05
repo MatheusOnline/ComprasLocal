@@ -3,11 +3,64 @@ import { DefaultTemplate } from "../../../Template/DefaultTemplate";
 import { Flex } from "@components/UI/Flex";
 import { Text } from "@components/UI/Text";
 import { Button } from "@components/UI/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@components/UI/Input/Input";
 import {SocialAuth} from "@components/Layout/SocialAuth/SocialAuth";
 import { ScrollToTop } from "@components/UI/ScrollToTop";
+import { useRegister } from "../../../hooks/useAuth";
+import { useState } from "react";
+
+
+
 const Register = () => {
+    const [firstname , setFirstname] = useState("")
+    const [lastname, setLastname] = useState("")
+    const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
+    const [cpf, setCpf] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordConfi, setPasswordConfi] = useState("")
+    const [error, setError] = useState("")
+    const RegisterMutation = useRegister()
+    const navigate = useNavigate()
+    const handleSubmit = async () => {
+        if(!email && !password && !firstname && !lastname && !cpf){
+            setError("Preencha todos os campo para continuar")
+            return
+        }
+
+        if(password !== passwordConfi){
+            setError("As senhas não são iguais")
+            return
+        }
+
+        RegisterMutation.mutateAsync(
+        {
+            firstname: firstname,
+            lastname: lastname,
+            cpf: cpf,
+            phone: phone,
+            password: password,
+            email: email
+        },{
+            onSuccess: (data) => {
+                console.log(data)
+                if(!data.success){
+                    setError("Email ou senha incorreto")
+                }else{
+                    navigate("/")
+                }
+            },
+            onError: (error) => {
+                console.log(error)
+            }
+        })
+        
+    }
+
+
+
+
     return (
         <DefaultTemplate>
             <ScrollToTop/>
@@ -19,20 +72,24 @@ const Register = () => {
 
                 <Flex flexDirection="column" gap="8px" >
                     <Flex flexDirection="row" gap="4px"  fullWidth={true} >                    
-                        <Input label="Nome" type="text" placeholder="Nome" />
-                        <Input label="Sobrenome" type="text" placeholder="Sobrenome" />
+                        <Input label="Nome" type="text" placeholder="Nome" value={firstname} onChange={(e) => {setFirstname(e.target.value)}}/>
+                        <Input label="Sobrenome" type="text" placeholder="Sobrenome" value={lastname} onChange={(e) => {setLastname(e.target.value)}}/>
                     </Flex>
-                    <Input label="Email" type="text" placeholder="Email" />
-                    <Input label="Senha" type="text" placeholder="Senha" />
-                    <Input label="Confirmar senha" type="text" placeholder="Senha" />
+                    <Flex flexDirection="row" gap="4px"  fullWidth={true} >                    
+                        <Input label="CPF" type="text" placeholder="Nome" value={cpf} onChange={(e) => {setCpf(e.target.value)}}/>
+                        <Input label="Telefone" type="text" placeholder="Sobrenome" value={phone} onChange={(e) => {setPhone(e.target.value)}}/>
+                    </Flex>
+                    <Input label="Email" type="text" placeholder="Email" value={email} onChange={(e) => {setEmail(e.target.value)}} />
+                    <Input label="Senha" type="text" placeholder="*********" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+                    <Input label="Confirmar senha" type="text" placeholder="*********"  value={passwordConfi} onChange={(e) => {setPasswordConfi(e.target.value)}} />
                 </Flex>
                 
                 <Flex gap="10px">
                     <input type="checkbox" id="terms" />
                     <label htmlFor="terms">Li e concordo com os termos de uso</label>
                 </Flex>
-
-                <Button palette="primary" variant="contained">Cadastrar</Button>
+                {error}
+                <Button palette="primary" variant="contained" onclick={handleSubmit}>Cadastrar</Button>
                 <Flex fullWidth justifyContent="center">
                     <Text fontSize="small">Já tem uma conta? <LinkText to="/auth/login">Faça login</LinkText></Text>
                 </Flex>

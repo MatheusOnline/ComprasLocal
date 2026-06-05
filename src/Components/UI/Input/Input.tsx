@@ -1,5 +1,20 @@
 import styled from "styled-components";
 
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+ 
+}
+
+export const Input = ({ label, ...props }: InputProps) => {
+  return (
+      <Container>
+          {label && <Label>{label}</Label>}
+          <StyledInput {...props} />
+      </Container>
+  );
+};
+
 const Container = styled.label`
   display: flex;
   flex-direction: column;
@@ -24,16 +39,3 @@ const StyledInput = styled.input`
     border-color: ${({ theme }) => theme.colors.brand_color_500};
   }
 `;
-
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-}
-
-export const Input = ({ label, ...props }: InputProps) => {
-  return (
-    <Container>
-      {label && <Label>{label}</Label>}
-      <StyledInput {...props} />
-    </Container>
-  );
-};

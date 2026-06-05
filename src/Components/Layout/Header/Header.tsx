@@ -27,7 +27,7 @@ export const Header = () => {
 
             <Search/>
 
-            {getActions(isLoggedIn)}
+            {getActions(!isLoggedIn)}
         </ContainerHeader>
     )
 }
