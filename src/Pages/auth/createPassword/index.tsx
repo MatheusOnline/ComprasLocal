@@ -4,11 +4,44 @@ import { Flex } from "@components/UI/Flex";
 import { Text } from "@components/UI/Text";
 import { Button } from "@components/UI/Button";
 import { useNavigate } from "react-router-dom";
-
+import { useCreatePassword } from "../../../hooks/useAuth";
 import { Input } from "@components/UI/Input/Input";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 const CreatePassword = () => {
     const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
 
+    const createPasswordMutation = useCreatePassword()
+    const [password, setPassword] = useState("")
+    const [confiPasswprd, setConfiPassword] = useState("")
+    const [error, setError] = useState("")
+    const token = searchParams.get("token");
+
+    const handleSubmit = async () => {
+            if(!password && !confiPasswprd ){
+                setError("Preencha todos os campo para continuar")
+                return
+            }
+            console.log(token, password)
+            createPasswordMutation.mutateAsync( {
+                password,
+                recoverToken: token || ""
+            },{
+                onSuccess: (data) => {
+                    console.log(data)
+                    if(!data.success){
+                        setError(data)
+                    }else{
+                        navigate(`/`)
+                    }
+                },
+                onError: (error) => {
+                    console.log(error)
+                }
+            })
+            
+        }
     return (
         <DefaultTemplate>
             <Flex fullWidth justifyContent="center">
@@ -21,12 +54,12 @@ const CreatePassword = () => {
                         <Text fontSize="small" color="secondary">Escolha uma senha forte para proteger sua conta.</Text>
                     </Flex>
                     <Flex flexDirection="column" justifyContent="center" gap="8px" >
-                        <Input label="Senha" type="password" placeholder="***********"/>
-                        <Input label="Confirmar senha" type="password" placeholder="**********"/>
+                        <Input label="Senha" type="password" placeholder="***********" value={password} onChange={(e) => {setPassword(e.target.value)}}/>
+                        <Input label="Confirmar senha" type="password" placeholder="**********" value={confiPasswprd} onChange={(e) => {setConfiPassword(e.target.value)}}/>
                     </Flex>
                     
-
-                    <Button palette="primary" variant="contained">Continuar</Button>
+                    {error}
+                    <Button palette="primary" variant="contained" onclick={handleSubmit}>Continuar</Button>
                     
                     
                 </ContainerCard>

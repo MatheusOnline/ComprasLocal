@@ -13,23 +13,21 @@ const fetchlogin = async (value: loginDatas) => {
     return response.data;
 };
 
-
 export function useLogin() {
   return useMutation({
     mutationFn: fetchlogin,
   });
 }
 
+
 const fetchRegister = async (value:RegisterDatas) => {
     const response = await axios.post(
-        `${API_URL}/auth/register`,
+        `${API_URL}/auth/register `,
         value
     )
 
     return response.data
 }
-
-
 
 export function useRegister() {
   return useMutation({
@@ -37,6 +35,49 @@ export function useRegister() {
   });
 }
 
+
+const fetchForgorPassword = async (email:string) => {
+    const response = await axios.post(
+        `${API_URL}/auth/forgotpassword`,{email}
+    )
+
+    return response.data
+}
+
+export function useForgotPassword() {
+  return useMutation({
+    mutationFn: fetchForgorPassword,
+  });
+}
+
+
+const fetchVerifyCode = async (value:VerifyCode) => {
+    const response = await axios.post(
+        `${API_URL}/auth/verifycode `,
+        value
+    )
+
+    return response.data
+}
+
+export function useVerifyCode() {
+  return useMutation({
+    mutationFn: fetchVerifyCode,
+  });
+}
+
+const fetchCreatePassword= async (value:CreatePasswordData) => {
+    const response = await axios.post(
+        `${API_URL}/auth/update `,value)
+
+    return response.data
+}
+
+export function useCreatePassword() {
+  return useMutation({
+    mutationFn: fetchCreatePassword,
+  });
+}
 
 type loginDatas = {
     email: string,
@@ -50,4 +91,14 @@ type RegisterDatas = {
     email: string,
     cpf: string,
     password: string
+}
+
+type VerifyCode = {
+  code: string
+  recoverToken: string
+}
+
+type CreatePasswordData = {
+  recoverToken: string
+  password: string
 }

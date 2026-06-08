@@ -1,16 +1,23 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
 
-export const CodeInput = () => {
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
+interface CodeInputProps {
+  onChange?: (code: string) => void;
+}
+
+export const CodeInput = ({ onChange }: CodeInputProps) => {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+  const [code, setCode] = useState(["", "", "", "", "", ""]);
 
   const handleChange = (value: string, index: number) => {
     if (!/^\d*$/.test(value)) return;
 
     const newCode = [...code];
     newCode[index] = value.slice(-1);
+
     setCode(newCode);
+
+    onChange?.(newCode.join(""));
 
     if (value && index < 5) {
       inputsRef.current[index + 1]?.focus();

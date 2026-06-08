@@ -8,10 +8,38 @@ import { Input } from "@components/UI/Input/Input";
 import {SocialAuth} from "@components/Layout/SocialAuth/SocialAuth";
 import { ScrollToTop } from "@components/UI/ScrollToTop";
 import { useNavigate } from "react-router-dom";
-
+import { useForgotPassword } from "../../../hooks/useAuth";
+import { useState } from "react";
 const ForgotPassword = () => {
     const navigate = useNavigate()
-    
+    const [email, setEmail] = useState("") 
+    const [error, setError] = useState("")
+
+    const ForgotPasswordMutation  = useForgotPassword()
+    const handleSubmit = async () => {
+        if(!email ){
+            setError("Preencha o email")
+            return
+        }
+
+        ForgotPasswordMutation.mutateAsync(
+         email
+            ,{
+            onSuccess: (data) => {
+                console.log(data)
+                if(!data.success){
+                    setError("Email ou senha incorreto")
+                }else{
+                    navigate(`/auth/code?token=${encodeURIComponent(data.recoverToken)}`)
+                }
+            },
+            onError: (error) => {
+                console.log(error)
+            }
+        })
+        
+    }
+
     return (
         <DefaultTemplate>
             <ScrollToTop/>
@@ -21,11 +49,11 @@ const ForgotPassword = () => {
                     <Text fontSize="small" color="secondary">Insira seu email para recuperar a senha.</Text>
                 </Flex>
                 <Flex flexDirection="column" gap="8px" >
-                    <Input label="Email" type="text" placeholder="Email" />
+                    <Input label="Email" type="text" placeholder="Email" value={email} onChange={(e) => {setEmail(e.target.value)} } />
                 </Flex>
                 
-
-                <Button palette="primary" variant="contained" onclick={() => {navigate("/auth/code")}}>Recuperar Senha</Button>
+                {error}
+                <Button palette="primary" variant="contained" onclick={handleSubmit}>Recuperar Senha</Button>
                 <Flex fullWidth justifyContent="center">
                     <Text fontSize="small">Não tem uma conta? <LinkText to="/auth/register">Cadastre-se</LinkText></Text>
                 </Flex>
