@@ -11,8 +11,10 @@ import { ScrollToTop } from "@components/UI/ScrollToTop";
 import { useLogin } from "../../../hooks/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useAuth } from "../../../stores/useAuth";
 const Login = () => {
+    const setUser = useAuth((state) => state.setUser);
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -31,13 +33,15 @@ const Login = () => {
             password: password,
             email: email
         },{
-            onSuccess: (data) => {
+            onSuccess: async (data) => {
                 console.log(data)
                 if(!data.success){
                     setError("Email ou senha incorreto")
-                }else{
-                    navigate("/")
+                    return
                 }
+                setUser({name: "matheus", email:"Matheus.francisco@gmail.com", id: "1"})
+                navigate("/")
+                
             },
             onError: (error) => {
                 console.log(error)

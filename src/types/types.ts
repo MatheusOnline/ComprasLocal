@@ -1,12 +1,12 @@
 export type CardProductProps = {
-    ratting: number;
-    price: number;
-    title: string;
-    store: string;
-    imgSrc: string;    
+    assessment: number;
+    original_price: number;
+    name: string; 
     id: string;
-    category?: string;
-    discount?: number;
+    code: string
+    image: string;
+    current_price?: number;
+    store: string
 }
 
 export type ProductInformationProps = {

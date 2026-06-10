@@ -10,6 +10,7 @@ import { useProductData } from "../../hooks/useProductsData"
 
 export const Home = () => {
     const { data, isLoading } = useProductData()
+    
     return(
         <DefaultTemplate    >
             <CatalogBanners />

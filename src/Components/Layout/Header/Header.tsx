@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { useState } from "react"
 import { Link } from "react-router-dom"
 
 import Logo from "@assets/Img/Logos/PrimaryLogo.png"
@@ -8,17 +7,18 @@ import { Search } from '../../UI/Search'
 import { LoggedActions } from "./LoggedActions"
 import { GuestActions } from "./GuestActions"
 
+import { useAuth } from "../../../stores/useAuth"
 
 export const Header = () => {
     
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     
+    const user = useAuth((state) => state.user);
 
     //FUNCAÇÃO PARA MUDAR OS BOTOES DE ACOES DEPENDENDO SE TA LOGADO OU NAO
     const getActions = (isLoggedIn: boolean) => {
         if (isLoggedIn) return <LoggedActions />;
         return <GuestActions />;
-        setIsLoggedIn(false)
+        
     };
 
     return(
@@ -27,7 +27,7 @@ export const Header = () => {
 
             <Search/>
 
-            {getActions(!isLoggedIn)}
+            {getActions(!user)}
         </ContainerHeader>
     )
 }

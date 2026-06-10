@@ -21,8 +21,9 @@ createRoot(document.getElementById('root')!).render(
       <GlobalStyle/>
       <ThemeProvider theme={defaultTheme}>
         <QueryClientProvider client={client}>
-
-          <AppRoutes />
+          
+            <AppRoutes />
+          
         </QueryClientProvider>
       </ThemeProvider>
     </StrictMode>

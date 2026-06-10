@@ -12,3 +12,10 @@ const handleSubmit = () => {
     password,
   });
 };
+
+<Suspense fallback={<Skeleton />}>
+  <CartSummary />
+</Suspense>
+
+const CartSummary = React.lazy(() => import("./CartSummary"));
+const CatalogProducts = React.lazy(() => import("./CatalogProducts"));

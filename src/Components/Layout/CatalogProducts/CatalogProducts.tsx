@@ -27,14 +27,14 @@ export function CatalogProducts({products, isLoading}:CatalogProductsProps) {
         products?.map((product: any) => (
           <ProductCard
             id={product.id}
+            code={product.code}
             key={product.id}
-            ratting={product.rating}
-            price={product.price}
-            title={product.title}
-            store={product.brand}
-            imgSrc={product.thumbnail}
-            category={product.category}
-              discount={product.discountPercentage}
+            assessment={product.assessment}
+            original_price={product.original_price}
+            name={product.name}
+            store= "nome"
+            image={product.image}
+            current_price={product.current_price}
           />
         ))
       }

@@ -6,7 +6,7 @@ const API_URL = "https://dummyjson.com"
 
 const fetchCart = async()  => {
     const response = await axios.get(`${API_URL}/carts/3`)
-    return response?.data.products
+    return response?.data
 }
 
 
