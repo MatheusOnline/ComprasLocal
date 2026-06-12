@@ -5,7 +5,7 @@ import { Text } from "../../UI/Text"
 import { Like } from "../../UI/Like/Like"
 import { Assessment } from "../../UI/Assessment/Assessment"
 import CartIcon from "./../../../Assets/Svgs/CartNormal.svg"
-import { useCart } from "../../../hooks/useCart"
+import { useCartStore } from "../../../stores/cartStore"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../../stores/useAuth"
 import type { CardProductProps } from "../../../types/types"
@@ -26,7 +26,7 @@ function createSlug(text: string) {
 export function ProductCard({ assessment, original_price, code, store, name, image, id, current_price }: CardProductProps) {
     const navigate = useNavigate()
     const user = useAuth((state) => state.user);
-    const cart = useCart()
+    const addToCart = useCartStore((state) => state.addToCart);
     function AddCart(e: React.MouseEvent){
         e.stopPropagation();
         
@@ -34,8 +34,8 @@ export function ProductCard({ assessment, original_price, code, store, name, ima
             navigate("/auth/login")
             return
         }
-        cart.addItem(Number(id))
-
+        
+        addToCart(id)
     }
 
     return(
