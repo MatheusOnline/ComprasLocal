@@ -4,12 +4,18 @@ import { useMutation } from "@tanstack/react-query";
 
 const API_URL = "http://localhost:3000/v1"
 
+export const api = axios.create({
+    baseURL: "http://localhost:3000/v1",
+    withCredentials: true
+});
+
 const fetchlogin = async (value: loginDatas) => {
-    const response = await axios.post(
-        `${API_URL}/auth/login`,
+    const response = await api.post(
+        "/auth/login",
         value
     );
 
+   
     return response.data;
 };
 

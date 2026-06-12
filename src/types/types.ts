@@ -20,9 +20,9 @@ export type ProductInformationProps = {
 }
 
 export type CartItemProps = {
-    thumbnail: string
+    image: string
     id: number
-    title: string
+    name: string
     store: string
     price: number
     quantity: number

@@ -11,10 +11,13 @@ interface CartItem {
   name: string;
   quantity: number;
   price: number;
+  image: string
+  store: string 
 }
 
 interface CartStore {
-   cart: CartItem[];
+  cart: CartItem[];
+   
   loading: boolean;
   error: string | null;
 
@@ -31,10 +34,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
     try {
       set({ loading: true, error: null });
 
-      const { data } = await api.post("/list");
-
+      const {data} = await api.post("/list");
+      console.log(data.data.items)
       set({
-        cart: data,
+        cart: data.data.items,
         loading: false,
       });
     } catch (error:any) {
@@ -50,7 +53,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       set({ loading: true, error: null });
 
       const response = await api.post("/add", {
-        productId,
+        product_id: productId,
         quantity,
       });
 

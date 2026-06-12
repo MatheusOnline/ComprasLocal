@@ -7,12 +7,12 @@ import IconUser from "@assets/Svgs/UserNormal.svg"
 import IconLike from "@assets/Svgs/HeartNormal.svg"
 import IconCart from "@assets/Svgs/CartNormalBlack.svg"
 
-import { useCart } from "../../../hooks/useCart";
+import { useCartStore } from "../../../stores/cartStore";
 
 
 export const GuestActions = () => {
-    const cart = useCart()
-
+    const {cart} = useCartStore()
+    console.log(cart)
 
     return(
         <>
@@ -26,7 +26,7 @@ export const GuestActions = () => {
                     </ButtonStyled>
                     <CartWrapper  to="/cart" >
                         <img src={IconCart} alt="Cart" />
-                        <CartBadge>{cart.item.length}</CartBadge>
+                        <CartBadge>{cart?.length || 0}</CartBadge>
                     </CartWrapper>
                 </Flex>
             </ActionsDesktop>

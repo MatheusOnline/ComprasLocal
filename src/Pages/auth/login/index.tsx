@@ -39,7 +39,7 @@ const Login = () => {
                     setError("Email ou senha incorreto")
                     return
                 }
-                setUser({name: "matheus", email:"Matheus.francisco@gmail.com", id: "1"})
+                setUser({name: data.user.name, email: data.user.email })
                 navigate("/")
                 
             },

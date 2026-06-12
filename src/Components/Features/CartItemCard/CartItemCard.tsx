@@ -6,18 +6,18 @@ import { Button } from "@components/UI/Button"
 import { BsFillTrash3Fill } from "react-icons/bs";
 import type { CartItemProps } from "../../../types/types"
 import { useState } from "react"
-export const CartItemCard =({id, title, store, price, thumbnail, quantity}: CartItemProps) => {
+export const CartItemCard =({id, name, store, price, image, quantity}: CartItemProps) => {
     
     const [qnt, setQnt] = useState(quantity)
     return(
         <Container key={id}>
             
-            <Imagen src={thumbnail} alt="" />
+            <Imagen src={image} alt="" />
 
             <Flex flexDirection="column" gap="0.5rem" fullWidth={true} justifyContent="space-between">
                 <Flex flexDirection="row" justifyContent="space-between" alignItems="center" fullWidth={true}>
                     <div>
-                        <Text fontSize="medium" fontWeight="semi-bold">{title}</Text>
+                        <Text fontSize="medium" fontWeight="semi-bold">{name}</Text>
                         <p>{store}</p>
                     </div>
                     <Text fontSize="medium" fontWeight="semi-bold">R${price}</Text>

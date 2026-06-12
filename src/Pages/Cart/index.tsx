@@ -3,12 +3,12 @@ import { CartCatalog } from "@components/Layout/CartCatalog/CartCatalog"
 import { CartSummary } from "@components/Layout/CartSummary"
 import { Flex } from "@components/UI/Flex"
 import { Breadcrumbs } from "@components/UI/Breadcrumb"
-import { useCartData } from "../../hooks/useCartDatas"
-import { ScrollToTop } from "@components/UI/ScrollToTop"
 
+import { ScrollToTop } from "@components/UI/ScrollToTop"
+import { useCartStore } from "../../stores/cartStore"
 
 const CartPage = () =>{
-    const { data, isLoading } = useCartData()
+    const { cart, loading } = useCartStore()
 
     return(
         <DefaultTemplate>
@@ -16,8 +16,8 @@ const CartPage = () =>{
             <Breadcrumbs label="Carrinho" isLoading={false}/>
             
             <Flex flexDirection="row"  gap="10px" fullWidth={true}>
-                <CartCatalog items={data} isLoading={isLoading}/>
-                <CartSummary isLoading={isLoading} redirect="/payment/checkout"/>
+                <CartCatalog items={cart} isLoading={loading}/>
+                <CartSummary isLoading={loading} redirect="/payment/checkout"/>
             </Flex>
             
 

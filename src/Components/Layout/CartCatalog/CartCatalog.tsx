@@ -23,10 +23,10 @@ export const CartCatalog = ({items, isLoading}: CartCatalogProps) => {
                 <CartItemCard 
                     key={item.id}
                     id={item.id}
-                    title={item.title}
+                    name={item.name}
                     store="teste"
                     price={item.price}
-                    thumbnail={item.thumbnail}
+                    image={item.image}
                     quantity={item.quantity}
                 />
             ))

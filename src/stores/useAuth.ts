@@ -2,7 +2,6 @@ import { create } from "zustand";
 import axios from "axios";
 
 type User = {
-  id: string;
   name: string;
   email: string;
 };
