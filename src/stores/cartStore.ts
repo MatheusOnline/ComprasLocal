@@ -7,7 +7,7 @@ const api = axios.create({
 });
 
 interface CartItem {
-  id: number;
+  id: string;
   name: string;
   quantity: number;
   price: number;
@@ -17,18 +17,21 @@ interface CartItem {
 
 interface CartStore {
   cart: CartItem[];
-   
+  
+  
   loading: boolean;
   error: string | null;
 
   getCart: () => Promise<void>;
   addToCart: (productId: string, quantity?: number) => Promise<void>;
+  removeFromCart: (productId: string) => Promise<void>;
 }
 
 export const useCartStore = create<CartStore>((set, get) => ({
   cart: [],
   loading: false,
   error: null,
+  
 
   getCart: async () => {
     try {
@@ -37,6 +40,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       const {data} = await api.post("/list");
       console.log(data.data.items)
       set({
+        
         cart: data.data.items,
         loading: false,
       });
@@ -54,7 +58,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
       const response = await api.post("/add", {
         product_id: productId,
-        quantity,
+        quantity,   
       });
 
       console.log(response)
@@ -74,7 +78,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
     try {
       set({ loading: true, error: null });
 
-      await api.delete(`/cart/${productId}`);
+      await api.delete(`/remove/${productId}`);
 
       await get().getCart();
 

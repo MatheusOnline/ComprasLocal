@@ -12,9 +12,13 @@ type CartSummartProps = {
     isLoading: boolean
     isEnabled?: boolean
     redirect: string
+
+
+    subtotal: number
+    total: number
 }
 
-export const CartSummary = ({isLoading, isEnabled,redirect}:CartSummartProps) => {
+export const CartSummary = ({isLoading, isEnabled,redirect , subtotal, total}:CartSummartProps) => {
     const navigate = useNavigate()
     if(isLoading){
         return(
@@ -28,7 +32,7 @@ export const CartSummary = ({isLoading, isEnabled,redirect}:CartSummartProps) =>
             <Flex gap="10px" flexDirection="column">
                 <Flex flexDirection="row" justifyContent="space-between">
                     <p>Subtotal</p>
-                    <p>R$123,00</p>
+                    <p>R${subtotal || "00,00"}</p>
                 </Flex>
                 <Flex flexDirection="row" justifyContent="space-between">
                     <p>Taxa de entrega</p>
@@ -36,12 +40,12 @@ export const CartSummary = ({isLoading, isEnabled,redirect}:CartSummartProps) =>
                 </Flex>
                 <Flex flexDirection="row" justifyContent="space-between">
                     <p>Descontos</p>
-                    <p>-R$10,00</p>
+                    <p>R$00,00</p>
                 </Flex>
                 <Line />
                 <Flex flexDirection="row" justifyContent="space-between">
                     <p>Total</p>
-                    <p>R$113,00</p>
+                    <p>R${total || "00,00"}</p>
                 </Flex>
                 <Button disabled={isEnabled} fullWidth={true} variant="contained" palette="primary" onclick={() => {navigate(redirect)}}>Finalizar Compra</Button>
             </Flex>

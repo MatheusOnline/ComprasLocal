@@ -10,6 +10,9 @@ import { useCartStore } from "../../stores/cartStore"
 const CartPage = () =>{
     const { cart, loading } = useCartStore()
 
+    const total = cart.reduce((acc, item) => {
+        return acc + (item.price * item.quantity);
+    }, 0);
     return(
         <DefaultTemplate>
             <ScrollToTop/>
@@ -17,7 +20,7 @@ const CartPage = () =>{
             
             <Flex flexDirection="row"  gap="10px" fullWidth={true}>
                 <CartCatalog items={cart} isLoading={loading}/>
-                <CartSummary isLoading={loading} redirect="/payment/checkout"/>
+                <CartSummary total={total} subtotal={total}  isLoading={loading} redirect="/payment/checkout"/>
             </Flex>
             
 

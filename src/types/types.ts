@@ -21,7 +21,7 @@ export type ProductInformationProps = {
 
 export type CartItemProps = {
     image: string
-    id: number
+    id: string
     name: string
     store: string
     price: number

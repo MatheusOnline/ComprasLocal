@@ -6,9 +6,19 @@ import { Button } from "@components/UI/Button"
 import { BsFillTrash3Fill } from "react-icons/bs";
 import type { CartItemProps } from "../../../types/types"
 import { useState } from "react"
+
+import { useCartStore } from "../../../stores/cartStore"
+
+
 export const CartItemCard =({id, name, store, price, image, quantity}: CartItemProps) => {
-    
+    const {removeFromCart} = useCartStore()    
     const [qnt, setQnt] = useState(quantity)
+
+    async function remove() {
+       const result =  await removeFromCart(id )
+       console.log(result)
+    }
+
     return(
         <Container key={id}>
             
@@ -24,7 +34,7 @@ export const CartItemCard =({id, name, store, price, image, quantity}: CartItemP
                 </Flex>
                 <Flex flexDirection="row" alignItems="center" justifyContent="space-between" gap="1rem"fullWidth={true}>
                     <Stepper value={qnt} onChange={setQnt}/>
-                    <Button palette="danger" variant="contained" icon={true}><BsFillTrash3Fill size={18}/></Button>
+                    <Button onclick={remove} palette="danger" variant="contained" icon={true}><BsFillTrash3Fill size={18}/></Button>
                 </Flex>
             </Flex>  
             
