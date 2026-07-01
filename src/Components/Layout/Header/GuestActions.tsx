@@ -12,13 +12,12 @@ import { useCartStore } from "../../../stores/cartStore";
 
 export const GuestActions = () => {
     const {cart} = useCartStore()
-    console.log(cart)
 
     return(
         <>
             <ActionsDesktop>
                 <Flex gap={"15px"}>
-                    <ButtonStyled to="profile"  >
+                    <ButtonStyled to="/profile"  >
                         <img src={IconUser} alt="User" />
                     </ButtonStyled>
                     <ButtonStyled  to="/favorites" >

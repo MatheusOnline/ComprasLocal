@@ -15,7 +15,7 @@ type props ={
     maxHeight?: string;
 }
 
-export function Button({ children, type, palette, variant, disabled, fullWidth, icon, maxWidth, maxHeight, onclick }: props) {
+export function Button({ children, type = "button", palette, variant, disabled, fullWidth, icon, maxWidth, maxHeight, onclick }: props) {
     const getClassName = useCallback(() => {
       return `$ __button-${variant} __button-${variant}-${palette} `  
     }, [palette, variant,])

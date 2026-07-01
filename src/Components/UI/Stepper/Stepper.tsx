@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import { styled } from "styled-components";
 import { Button } from "@components/UI/Button";
 import { Text } from "@components/UI/Text";
@@ -11,12 +12,14 @@ type StepperProps = {
 };
 
 export const Stepper = ({ value, onChange, min = 1, max }: StepperProps) => {
-    const increment = () => {
+    const increment = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         if (max !== undefined && value >= max) return;
         onChange(value + 1);
     };
 
-    const decrement = () => {
+    const decrement = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         if (value <= min) return;
         onChange(value - 1);
     };
@@ -24,7 +27,7 @@ export const Stepper = ({ value, onChange, min = 1, max }: StepperProps) => {
     return (
         <BorderColor>
             <StepperStyled gap="12px" alignItems="center">
-                <Button variant="outlined" palette="neutral" onclick={decrement}>
+                <Button type="button" variant="outlined" palette="neutral" onclick={decrement}>
                     <Text color="primary">-</Text>
                 </Button>
 
@@ -32,7 +35,7 @@ export const Stepper = ({ value, onChange, min = 1, max }: StepperProps) => {
                     <Text>{value}</Text>
                 </ValueContainer>
 
-                <Button variant="outlined" palette="neutral" onclick={increment}>
+                <Button type="button" variant="outlined" palette="neutral" onclick={increment}>
                     <Text color="primary">+</Text>
                 </Button>
             </StepperStyled>

@@ -5,18 +5,29 @@ import { Stepper } from "@components/UI/Stepper"
 import { Button } from "@components/UI/Button"
 import { BsFillTrash3Fill } from "react-icons/bs";
 import type { CartItemProps } from "../../../types/types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useCartStore } from "../../../stores/cartStore"
 
 
 export const CartItemCard =({id, name, store, price, image, quantity}: CartItemProps) => {
-    const {removeFromCart} = useCartStore()    
+    const {removeFromCart, updateQuantity, selectedIds, toggleItem, removeItem} = useCartStore()    
+    const checked = selectedIds.includes(id)
+
     const [qnt, setQnt] = useState(quantity)
 
+    useEffect(() => {
+        setQnt(quantity)
+    }, [quantity])
+
     async function remove() {
-       const result =  await removeFromCart(id )
-       console.log(result)
+        removeItem(id)
+        await removeFromCart(id)
+    }
+
+    const handleQuantityChange = async (value:number) => {
+        setQnt(value)
+        await updateQuantity(id, value)
     }
 
     return(
@@ -25,6 +36,9 @@ export const CartItemCard =({id, name, store, price, image, quantity}: CartItemP
             <Imagen src={image} alt="" />
 
             <Flex flexDirection="column" gap="0.5rem" fullWidth={true} justifyContent="space-between">
+                <input type="checkbox" 
+                checked={checked}
+                onChange={() => toggleItem(id)}/>
                 <Flex flexDirection="row" justifyContent="space-between" alignItems="center" fullWidth={true}>
                     <div>
                         <Text fontSize="medium" fontWeight="semi-bold">{name}</Text>
@@ -32,8 +46,8 @@ export const CartItemCard =({id, name, store, price, image, quantity}: CartItemP
                     </div>
                     <Text fontSize="medium" fontWeight="semi-bold">R${price}</Text>
                 </Flex>
-                <Flex flexDirection="row" alignItems="center" justifyContent="space-between" gap="1rem"fullWidth={true}>
-                    <Stepper value={qnt} onChange={setQnt}/>
+                <Flex flexDirection="row" alignItems="center" justifyContent="space-between" gap="1rem" fullWidth={true}>
+                    <Stepper value={qnt} onChange={handleQuantityChange}/>
                     <Button onclick={remove} palette="danger" variant="contained" icon={true}><BsFillTrash3Fill size={18}/></Button>
                 </Flex>
             </Flex>  

@@ -32,6 +32,7 @@ const Login = () => {
         {
             password: password,
             email: email
+            
         },{
             onSuccess: async (data) => {
                 console.log(data)
@@ -39,7 +40,7 @@ const Login = () => {
                     setError("Email ou senha incorreto")
                     return
                 }
-                setUser({name: data.user.name, email: data.user.email })
+                setUser({name: data.user.name, email: data.user.email, cpf: data.user.cpf })
                 navigate("/")
                 
             },

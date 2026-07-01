@@ -5,26 +5,32 @@ import { Button } from "@components/UI/Button"
 import { Line } from "@components/UI/Line"
 import { Text } from "@components/UI/Text"
 import { CartSummarySkeleton } from "./CartSummarySkeleton"
-import { useNavigate } from "react-router-dom"
+
 
 
 type CartSummartProps = {
     isLoading: boolean
     isEnabled?: boolean
-    redirect: string
-
+    redirect?: () => void
+    onConfirm?: () => void
 
     subtotal: number
     total: number
 }
 
-export const CartSummary = ({isLoading, isEnabled,redirect , subtotal, total}:CartSummartProps) => {
-    const navigate = useNavigate()
+export const CartSummary = ({isLoading, isEnabled, onConfirm, subtotal, total}:CartSummartProps) => {
+    
     if(isLoading){
         return(
             <CartSummarySkeleton/>
         )
     }
+
+    const formatCurrency = (value:number) =>
+        value.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+        });
 
     return(
         <ContainerStyled>
@@ -32,7 +38,7 @@ export const CartSummary = ({isLoading, isEnabled,redirect , subtotal, total}:Ca
             <Flex gap="10px" flexDirection="column">
                 <Flex flexDirection="row" justifyContent="space-between">
                     <p>Subtotal</p>
-                    <p>R${subtotal || "00,00"}</p>
+                    <p>{formatCurrency(subtotal)}</p>
                 </Flex>
                 <Flex flexDirection="row" justifyContent="space-between">
                     <p>Taxa de entrega</p>
@@ -45,9 +51,16 @@ export const CartSummary = ({isLoading, isEnabled,redirect , subtotal, total}:Ca
                 <Line />
                 <Flex flexDirection="row" justifyContent="space-between">
                     <p>Total</p>
-                    <p>R${total || "00,00"}</p>
+                    <p>{formatCurrency(total)}</p>
                 </Flex>
-                <Button disabled={isEnabled} fullWidth={true} variant="contained" palette="primary" onclick={() => {navigate(redirect)}}>Finalizar Compra</Button>
+                <Button disabled={isEnabled} fullWidth={true} variant="contained" palette="primary" onclick={() => {
+                    if (onConfirm) {
+                        onConfirm();
+                        return;
+                    }
+
+                   
+                }}>Finalizar Compra</Button>
             </Flex>
         </ContainerStyled>
     )

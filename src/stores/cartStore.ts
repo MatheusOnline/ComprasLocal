@@ -17,28 +17,51 @@ interface CartItem {
 
 interface CartStore {
   cart: CartItem[];
-  
+  selectedIds: string[];
   
   loading: boolean;
   error: string | null;
 
+
+  toggleItem: (id: string) => void
+  removeItem: (id: string) => void
   getCart: () => Promise<void>;
   addToCart: (productId: string, quantity?: number) => Promise<void>;
   removeFromCart: (productId: string) => Promise<void>;
+  updateQuantity: (productId: string, quantity: number) => Promise<void>;
+  
 }
+
+
 
 export const useCartStore = create<CartStore>((set, get) => ({
   cart: [],
+  selectedIds:[],
   loading: false,
   error: null,
   
+
+
+  toggleItem: (id) =>
+        set((state) => ({
+            selectedIds: state.selectedIds.includes(id)
+            ? state.selectedIds.filter(i => i !== id)
+            : [...state.selectedIds, id]
+  })),
+
+  removeItem: (id) =>{
+      set((state) => ({
+          selectedIds: state.selectedIds.filter(i => i !== id)
+      }))
+  },
+
 
   getCart: async () => {
     try {
       set({ loading: true, error: null });
 
       const {data} = await api.post("/list");
-      console.log(data.data.items)
+      
       set({
         
         cart: data.data.items,
@@ -56,12 +79,12 @@ export const useCartStore = create<CartStore>((set, get) => ({
     try {
       set({ loading: true, error: null });
 
-      const response = await api.post("/add", {
+       await api.post("/add", {
         product_id: productId,
         quantity,   
       });
 
-      console.log(response)
+      
 
       await get().getCart();
 
@@ -91,21 +114,31 @@ export const useCartStore = create<CartStore>((set, get) => ({
     }
   },
 
-  clearCart: async () => {
+  updateQuantity: async (productId: string, quantity: number) => {
+    const previousCart = get().cart;
+
+    set((state) => ({
+      cart: state.cart.map((item) =>
+        item.id === productId ? { ...item, quantity } : item
+      ),
+      loading: true,
+      error: null,
+    }));
+
     try {
-      set({ loading: true, error: null });
-
-      await api.delete("/cart");
-
-      set({
-        cart: [],
-        loading: false,
+      await api.patch("/update", {
+        product_id: productId,
+        quantity,
       });
+
+      set({ loading: false });
     } catch (error:any) {
       set({
+        cart: previousCart,
         error: error.response?.data?.message || error.message,
         loading: false,
       });
     }
   },
+
 }));

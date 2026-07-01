@@ -4,6 +4,7 @@ import axios from "axios";
 type User = {
   name: string;
   email: string;
+  cpf: string
 };
 
 type AuthStore = {

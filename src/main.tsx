@@ -6,10 +6,7 @@ import defaultTheme from './style/theme.ts'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 
 import { AppRoutes } from './appRouters.tsx'
-
-
-
-
+import { AppInitializer } from './appInitializer.tsx'
 
 
 const client = new QueryClient()
@@ -21,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
       <GlobalStyle/>
       <ThemeProvider theme={defaultTheme}>
         <QueryClientProvider client={client}>
-          
+            <AppInitializer />
             <AppRoutes />
           
         </QueryClientProvider>

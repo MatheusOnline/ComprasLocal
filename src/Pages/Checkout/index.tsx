@@ -1,31 +1,64 @@
-import { useState } from "react";
+import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 import { DefaultTemplate } from "../../Template/DefaultTemplate";
+import { Breadcrumbs } from "@components/UI/Breadcrumb";
 import { Flex } from "@components/UI/Flex";
 import { Text } from "@components/UI/Text";
 import { Line } from "@components/UI/Line";
-import styled from "styled-components";
-import { useCartData } from "../../hooks/useCartDatas";
-import { Breadcrumbs } from "@components/UI/Breadcrumb";
+
+
 import { CartSummary } from "@components/Layout/CartSummary";
+import { useCheckoutStore } from "../../stores/checkoutStore";
+import { useAuth } from "../../stores/useAuth";
+
+import formatedCPF from "../../functions/formatedCpf";
+
 
 const Checkout = () => {
-    
-    const { data, isLoading } = useCartData();
+    const navigate = useNavigate();
+     const { checkoutId } = useParams();
     const [payMethod, setPayMethod ] = useState("");
+    const [products, setProducts] = useState<any>([])
+    const [checkout_id, setCheckout_id] = useState("")
+    const [total, setTotal] = useState(0)
+    const [subtotal, setSubtotal] = useState(0) 
+    const { getCheckout } = useCheckoutStore()
+    const { user } = useAuth()
 
-    const enabled = () => {
-        if (!data?.length) {
-            return true;
-          }
+    useEffect(() => {
+      
+       get()
+    },[checkoutId])
 
-        if(!payMethod)
-            return true
+    async function get() {
+      const data = await getCheckout(checkoutId || "")
+      console.log(data)
+      
+      setProducts(data?.products)
+      setTotal(data?.total || 0)
+      setSubtotal(data?.subtotal || 0)
+      setCheckout_id(data?.checkoutId || "")
+    }
+  
 
-        return false;
+    const handleCheckout = () => {
+      if (payMethod === "PIX") {
+        navigate(`/payment/pix/${checkout_id}`);;
+        return;
+      }
+
+      if (payMethod === "CARTAO") {
+        navigate(`/payment/card/${checkout_id}`);
+        return;
+      }
     };
+    console.log(user)
   return (
     <DefaultTemplate>
-        <Breadcrumbs label="checkout" path={["cart"]} isLoading={isLoading}/>
+      <Breadcrumbs label="checkout" path={["cart"]} isLoading={false}/>
+      
       <Flex flexDirection="row" fullWidth={true} gap="30px">
 
         <ContainerTopics>
@@ -33,27 +66,32 @@ const Checkout = () => {
           {/* PRODUTOS */}
           <ProductsContainer>
 
-            <Text fontSize="medium" fontWeight="semi-bold">{data?.length} Produtos</Text>
+            <Text fontSize="medium" fontWeight="semi-bold">{products.length} Produtos</Text>
 
+            
             <ProductsList>
-              {data?.map((item:any) => (
-                <ProductItem key={item.id}>
-                  <Flex>
-                        <ImagemProduct src={item.thumbnail} alt="" />
+              {products.length ? (
+                products.map((item:any) => (
+                  <ProductItem key={item.id}>
+                    <Flex>
+                          <ImagemProduct src={item.image} alt="" />
 
-                        <ItemRow>
-                            <Text fontWeight="semi-bold">{item.title}</Text>
-                            <Text>Quantidade: {item.quantity}</Text>
-                            <Text>SubTotal: R${item.total.toFixed(2)}</Text>
-                        </ItemRow>
-                    </Flex>
-                    <Line/>
-                </ProductItem>
-              ))}
+                          <ItemRow>
+                              <Text fontWeight="semi-bold">{item.name}</Text>
+                              <Text>Quantidade: {item.quantity}</Text>
+                              <Text>SubTotal: R${(item.price * item.quantity).toFixed(2)}</Text>
+                          </ItemRow>
+                      </Flex>
+                      <Line/>
+                  </ProductItem>
+                ))
+              ) : (
+                <Text>Selecione itens no carrinho para continuar.</Text>
+              )}
             </ProductsList>
 
           </ProductsContainer>
-
+          
           <Line />
 
           {/* ENDEREÇO */}
@@ -69,7 +107,7 @@ const Checkout = () => {
           {/* CPF */}
           <Flex flexDirection="column" gap="10px">
             <Text fontSize="medium" fontWeight="semi-bold">CPF</Text>
-            <Text>076.540.589-00</Text>
+            <Text>{formatedCPF(user?.cpf || "")}</Text>
           </Flex>
 
           <Line />
@@ -94,8 +132,8 @@ const Checkout = () => {
 
         </ContainerTopics>
 
-        <CartSummary isLoading={isLoading} isEnabled={enabled()} redirect="/payment/pix"/>
-
+        <CartSummary isLoading={false} isEnabled={!!!payMethod}  onConfirm={handleCheckout} subtotal={subtotal} total={total} />
+        
       </Flex>
     </DefaultTemplate>
   );
