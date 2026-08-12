@@ -5,12 +5,11 @@ import { Text } from "../../UI/Text"
 import { Like } from "../../UI/Like/Like"
 import { Assessment } from "../../UI/Assessment/Assessment"
 import CartIcon from "./../../../Assets/Svgs/CartNormal.svg"
-import { useCartStore } from "../../../stores/cartStore"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../../../stores/useAuth"
+import { useAuth } from "../../../stores/useAuthStore"
 import type { CardProductProps } from "../../../types/types"
-
-
+import { capitalizeWords } from "../../../functions/capitalizeWords"
+import { useAddItemToCart } from "../../../service/cartService"
 
 
 function createSlug(text: string) {
@@ -23,10 +22,12 @@ function createSlug(text: string) {
 }
 
 
-export function ProductCard({ assessment, original_price, code, store, name, image, id, current_price }: CardProductProps) {
+export function ProductCard({ assessment, original_price, code, store, title, image, id, current_price,liked }: CardProductProps) {
     const navigate = useNavigate()
     const user = useAuth((state) => state.user);
-    const addToCart = useCartStore((state) => state.addToCart);
+    
+    const { mutate: addItem } = useAddItemToCart();
+
     function AddCart(e: React.MouseEvent){
         e.stopPropagation();
         
@@ -35,15 +36,15 @@ export function ProductCard({ assessment, original_price, code, store, name, ima
             return
         }
         
-        addToCart(id)
+        addItem(id)
     }
 
     return(
-        <CardStyled onClick={() => navigate(`/product/${createSlug(name)}/${id}`)}>
+        <CardStyled onClick={() => navigate(`/product/${createSlug(title)}/${id}`)}>
             <Flex flexDirection="column"  gap="5px" alignItems="center">
                 
                 <Flex fullWidth={true} justifyContent="space-between" alignItems="center">
-                    <Like /> 
+                    <Like liked={liked ?? false} product_id={id}/> 
                     <Text fontWeight="semi-bold" fontSize="extra-small" color="secondary">#{code}</Text>
                 </Flex>
                 <ImageFrame>
@@ -52,7 +53,7 @@ export function ProductCard({ assessment, original_price, code, store, name, ima
                 <Flex flexDirection="column" fullWidth={true} alignItems="start" >
                     <Assessment value={assessment} />
                     <Info>
-                        <Text fontWeight="semi-bold" fontSize="normal" >{name}</Text>
+                        <Text fontWeight="semi-bold" fontSize="normal" >{capitalizeWords(title)}</Text>
                         <Text fontWeight="normal" fontSize="extra-small" color="secondary">{store}</Text>
                     </Info>
                 </Flex>

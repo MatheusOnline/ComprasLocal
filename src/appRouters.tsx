@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
 import { Home } from "./Pages/Home/Index";
-const Product = lazy(() => import("./Pages/Product/index"));
+const Product = lazy(() => import("./Pages/Announcement/index"));
 const CartPage = lazy(() => import("./Pages/Cart"));
 const Favorites = lazy(() => import("./Pages/Favorites"));
 const Search = lazy(() => import("./Pages/Search"));
@@ -17,8 +17,8 @@ const ForgotPassword = lazy(() => import("./Pages/auth/forgotPassword"));
 
 const ProfileLayout = lazy(() => import("./Pages/Profile/profileLayout"))
 const ProfileHome = lazy(() => import("./Pages/Profile/home"))
-const ProfileAddress = lazy(() => import("./Pages/Profile/Address"))
 const ProfileOrders = lazy(() => import("./Pages/Profile/orders"))
+const ProfileAnddress = lazy(() => import("./Pages/Profile/address"))
 
 export const AppRoutes = () => {
   return (
@@ -27,7 +27,7 @@ export const AppRoutes = () => {
       <Routes>
 
         <Route path="/" element={<Home />} />
-        <Route path="/product/:category/:slug/:id" element={<Product />} />
+        <Route path="/product/:slug/:id" element={<Product />} />
         <Route path="/cart" element={<CartPage/>}/>
         <Route path="/favorites" element={<Favorites/>} />
         <Route path="/search" element={<Search/>} />     
@@ -43,8 +43,8 @@ export const AppRoutes = () => {
         {/*Rotas do perfil do usario */}
         <Route path="/profile" element={<ProfileLayout />}>
           <Route index element={<ProfileHome />} />
-          <Route path="address" element={<ProfileAddress />} />
           <Route path="orders" element={<ProfileOrders />} />
+          <Route path="address" element={<ProfileAnddress/>} />
         </Route>
       </Routes>
         </Suspense>

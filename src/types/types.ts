@@ -1,28 +1,30 @@
 export type CardProductProps = {
     assessment: number;
     original_price: number;
-    name: string; 
+    title: string; 
     id: string;
     code: string
     image: string;
     current_price?: number;
     store: string
+    liked?: boolean
 }
 
 export type ProductInformationProps = {
-    rating: number;
+    id: string
+    assessment: number;
     stock: number;
-    brand: string;
+    code: string;
     title: string;
     description: string;
-    price: number;
-    discountPercentage?: number;
+    original_price: string;
+    category: string
 }
 
 export type CartItemProps = {
     image: string
     id: string
-    name: string
+    title: string
     store: string
     price: number
     quantity: number

@@ -7,7 +7,7 @@ import { Search } from '../../UI/Search'
 import { LoggedActions } from "./LoggedActions"
 import { GuestActions } from "./GuestActions"
 
-import { useAuth } from "../../../stores/useAuth"
+import { useAuth } from "../../../stores/useAuthStore"
 
 export const Header = () => {
     

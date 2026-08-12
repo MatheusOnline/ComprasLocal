@@ -1,6 +1,7 @@
 import { DefaultTemplate } from "../../../Template/DefaultTemplate";
 import { ScrollToTop } from "@components/UI/ScrollToTop";
 import { useEffect } from "react";
+
 import { useForgotPasswordStore } from "../../../stores/forgotPasswordStore";
 
 //TELAS PARA RECUPERAR A SENHA

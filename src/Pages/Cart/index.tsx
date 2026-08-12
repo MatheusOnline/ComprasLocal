@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+
 import { useNavigate } from "react-router-dom"
 import { DefaultTemplate } from "../../Template/DefaultTemplate"
 import { CartCatalog } from "@components/Layout/CartCatalog/CartCatalog"
@@ -8,29 +8,41 @@ import { Breadcrumbs } from "@components/UI/Breadcrumb"
 
 import { ScrollToTop } from "@components/UI/ScrollToTop"
 import { useCartStore } from "../../stores/cartStore"
-import { useCheckoutStore } from "../../stores/checkoutStore"
+
+
+
+import { useGetCart } from "../../service/cartService"
+import { useCreateCheckoutCart } from "../../service/checkoutService"
 
 const CartPage = () =>{
-    const { cart, loading, getCart, selectedIds } = useCartStore()
-    const { checkoutInit } = useCheckoutStore()
+    const {  selectedIds } = useCartStore()
+    const createCheckout = useCreateCheckoutCart()
     const navigate = useNavigate()
 
-    useEffect(() => {
-        getCart();
-    }, []);
+    const { data, isLoading } = useGetCart()    
 
-    const selectedTotal = cart.reduce((acc, item) => {
-        if (selectedIds.includes(item.id)) {
-            return acc + item.price * item.quantity;
-        }
-        return acc;
+    const selectedItems = data?.data.filter((item: any) => selectedIds.includes(item.id)) ?? [];
+
+    const subtotal = selectedItems.reduce((total: number, item: any) => {
+        return total + item.price * item.quantity;
     }, 0);
 
-    async function CreateCheckout(){
-        const data = await checkoutInit(selectedIds)
-        if(data){
-            navigate(`/payment/checkout/${data.checkoutId}`)
-        }
+    function CreateCheckout(){
+        createCheckout.mutateAsync(
+        {
+            
+            products_id: selectedIds
+        },{
+            onSuccess: async (data) => {
+    
+                console.log(data)
+                 navigate(`/payment/checkout/${data?.data?.checkoutId}`)
+            },
+            onError: (error: any)  => {
+                console.log(error.response.data)
+            }
+        })
+
     }
 
     return(
@@ -39,8 +51,8 @@ const CartPage = () =>{
             <Breadcrumbs label="Carrinho" isLoading={false}/>
             
             <Flex flexDirection="row"  gap="10px" fullWidth={true}>
-                <CartCatalog items={cart} isLoading={loading}/>
-                <CartSummary total={selectedTotal} subtotal={selectedTotal} isEnabled={selectedIds.length === 0} isLoading={loading} onConfirm={CreateCheckout}/>
+                <CartCatalog items={data?.data} isLoading={isLoading}/>
+                <CartSummary total={subtotal} subtotal={subtotal} isEnabled={selectedIds.length === 0} isLoading={isLoading} onConfirm={CreateCheckout}/>
             </Flex>
             
 

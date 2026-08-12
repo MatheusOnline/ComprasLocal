@@ -6,22 +6,23 @@ import { Flex } from "@components/UI/Flex";
 
 type StepperProps = {
     value: number;
-    onChange: (value: number) => void;
+    onIncrease: (value: number) => void;
+    onDecrease: (value: number) => void;
     min?: number;
     max?: number;
 };
 
-export const Stepper = ({ value, onChange, min = 1, max }: StepperProps) => {
+export const Stepper = ({ value, onDecrease, onIncrease, min = 1, max }: StepperProps) => {
     const increment = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (max !== undefined && value >= max) return;
-        onChange(value + 1);
+        onIncrease(value + 1);
     };
 
     const decrement = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (value <= min) return;
-        onChange(value - 1);
+        onDecrease(value - 1);
     };
 
     return (

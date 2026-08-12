@@ -20,7 +20,7 @@ export const Breadcrumbs = ({ path, label, isLoading }: BreadcrumbItem ) => {
       <BreadcrumbsSkeleton/>
     )
   }
-
+ 
   return (
     <Flex gap="8px" alignItems="center" >
       <>
@@ -32,7 +32,7 @@ export const Breadcrumbs = ({ path, label, isLoading }: BreadcrumbItem ) => {
       {
         path?.map((item) => (
           < >
-            <Links to={`/${item}`}><Text fontSize="small">{item}</Text></Links> 
+            <Links to={`/search?q=${encodeURIComponent(item)}`}><Text fontSize="small">{item}</Text></Links> 
             <Text fontSize="small">/</Text>  
           </>
         ))

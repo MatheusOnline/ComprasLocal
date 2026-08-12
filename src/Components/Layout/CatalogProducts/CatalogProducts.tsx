@@ -31,10 +31,11 @@ export function CatalogProducts({products, isLoading}:CatalogProductsProps) {
             key={product.id}
             assessment={product.assessment}
             original_price={product.original_price}
-            name={product.name}
+            title={product.title}
             store= "nome"
             image={product.image}
             current_price={product.current_price}
+            liked={product.liked || false}
           />
         ))
       }

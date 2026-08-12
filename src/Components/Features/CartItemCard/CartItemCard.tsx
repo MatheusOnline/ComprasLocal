@@ -8,46 +8,47 @@ import type { CartItemProps } from "../../../types/types"
 import { useEffect, useState } from "react"
 
 import { useCartStore } from "../../../stores/cartStore"
+import { useRemoveItemToCart, useIncreaseItemToCart, useDecreaseItemToCart } from "../../../service/cartService"
 
-
-export const CartItemCard =({id, name, store, price, image, quantity}: CartItemProps) => {
-    const {removeFromCart, updateQuantity, selectedIds, toggleItem, removeItem} = useCartStore()    
+export const CartItemCard =({id, title, store, price, image, quantity}: CartItemProps) => {
+    const {  selectedIds, toggleItem, removeToggleItem} = useCartStore()    
     const checked = selectedIds.includes(id)
-
+    const { mutate: removeItem} = useRemoveItemToCart();
+    const {mutate: increaseItem} = useIncreaseItemToCart()
+    const {mutate: decreaseItem} = useDecreaseItemToCart()
+    
     const [qnt, setQnt] = useState(quantity)
 
     useEffect(() => {
         setQnt(quantity)
     }, [quantity])
 
-    async function remove() {
+
+    function remove(){
+        removeToggleItem(id)
         removeItem(id)
-        await removeFromCart(id)
     }
 
-    const handleQuantityChange = async (value:number) => {
-        setQnt(value)
-        await updateQuantity(id, value)
-    }
+    
 
     return(
         <Container key={id}>
             
             <Imagen src={image} alt="" />
 
-            <Flex flexDirection="column" gap="0.5rem" fullWidth={true} justifyContent="space-between">
-                <input type="checkbox" 
-                checked={checked}
-                onChange={() => toggleItem(id)}/>
+            <Flex flexDirection="column" gap="1px" fullWidth={true} justifyContent="space-between">
+                <Flex>
+                    <input type="checkbox" checked={checked} onChange={() => toggleItem(id)}/>
+                </Flex>
                 <Flex flexDirection="row" justifyContent="space-between" alignItems="center" fullWidth={true}>
                     <div>
-                        <Text fontSize="medium" fontWeight="semi-bold">{name}</Text>
+                        <Text fontSize="medium" fontWeight="semi-bold">{title}</Text>
                         <p>{store}</p>
                     </div>
-                    <Text fontSize="medium" fontWeight="semi-bold">R${price}</Text>
+                    <Text fontSize="medium" fontWeight="semi-bold">R${Number(price).toFixed(2)}</Text>
                 </Flex>
                 <Flex flexDirection="row" alignItems="center" justifyContent="space-between" gap="1rem" fullWidth={true}>
-                    <Stepper value={qnt} onChange={handleQuantityChange}/>
+                    <Stepper value={qnt} onIncrease={() => increaseItem(id)} onDecrease={() => decreaseItem(id)}/>
                     <Button onclick={remove} palette="danger" variant="contained" icon={true}><BsFillTrash3Fill size={18}/></Button>
                 </Flex>
             </Flex>  

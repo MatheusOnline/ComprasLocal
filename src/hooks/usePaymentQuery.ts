@@ -1,10 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://localhost:3000/v1/payment",
-  withCredentials: true,
-});
+import { api } from "../service/api";
 
 const generatePix = async (checkout_id: string) => {
   const { data } = await api.post("/pix", {

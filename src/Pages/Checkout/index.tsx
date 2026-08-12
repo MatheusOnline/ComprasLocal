@@ -11,7 +11,7 @@ import { Line } from "@components/UI/Line";
 
 import { CartSummary } from "@components/Layout/CartSummary";
 import { useCheckoutStore } from "../../stores/checkoutStore";
-import { useAuth } from "../../stores/useAuth";
+import { useAuth } from "../../stores/useAuthStore";
 
 import formatedCPF from "../../functions/formatedCpf";
 
@@ -26,7 +26,7 @@ const Checkout = () => {
     const [subtotal, setSubtotal] = useState(0) 
     const { getCheckout } = useCheckoutStore()
     const { user } = useAuth()
-
+    
     useEffect(() => {
       
        get()
@@ -34,7 +34,6 @@ const Checkout = () => {
 
     async function get() {
       const data = await getCheckout(checkoutId || "")
-      console.log(data)
       
       setProducts(data?.products)
       setTotal(data?.total || 0)

@@ -2,7 +2,7 @@ import styled from "styled-components"
 import { useForgotPasswordStore } from "../../../stores/forgotPasswordStore"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../../../stores/useAuth"
+import { useAuth } from "../../../stores/useAuthStore"
 
 //COMPONENTES
 import { Flex } from "@components/UI/Flex"

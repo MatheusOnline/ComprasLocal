@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
+import { api } from "../service/api";
 
 type User = {
   name: string;
@@ -26,7 +26,7 @@ export const useAuth = create<AuthStore>((set) => ({
 
   fetchUser: async () => {
     try {
-      const res = await axios.get("http://localhost:3000/me", {
+      const res = await api.get("/v1/auth/me", {
         withCredentials: true,
       });
 

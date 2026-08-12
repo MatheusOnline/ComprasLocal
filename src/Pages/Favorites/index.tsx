@@ -2,16 +2,17 @@ import { DefaultTemplate } from "../../Template/DefaultTemplate"
 import { Breadcrumbs } from "@components/UI/Breadcrumb"
 import { CatalogProducts } from "@components/Layout/CatalogProducts"
 import { ScrollToTop } from "@components/UI/ScrollToTop"
-import { useProductFavoriteData } from "../../hooks/useProductsFavoriteData"
 
+
+import { useGetLikes } from "../../service/likeService"
 const Favorites = () => {
-    const {data, isLoading} = useProductFavoriteData()
+    const {data, isLoading} = useGetLikes()
     
     return(
         <DefaultTemplate>
             <ScrollToTop/>
             <Breadcrumbs isLoading={isLoading} label="Favoritos"/>
-            <CatalogProducts products={data} isLoading={isLoading} /> 
+            <CatalogProducts products={data?.data?.products} isLoading={isLoading} /> 
                    
         </DefaultTemplate>
 

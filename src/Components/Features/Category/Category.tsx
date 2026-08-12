@@ -46,7 +46,7 @@ export function Category({ name = "eletronic" }: CategoryProps) {
   if (!categoryData) return null;
 
   return (
-    <CategoryStyled onClick={() => navigate(`/search?category=${name}`)}>
+    <CategoryStyled onClick={() => navigate(`/search?q=${name}`)}>
       <img src={categoryData.svg} alt={categoryData.title} />
 
       <Text

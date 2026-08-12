@@ -1,13 +1,22 @@
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
+
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { api } from "./api";
 
 
-const API_URL = "http://localhost:3000/v1"
 
-export const api = axios.create({
-    baseURL: "http://localhost:3000/v1",
-    withCredentials: true
-});
+
+const fetchMe = async () => {
+  const response = await api.get("/auth/me")
+
+  return response.data
+}
+
+const fetchLogout = async () => {
+  const response = await api.post("/auth/logout")
+
+  return response.data
+}
+
 
 const fetchlogin = async (value: loginDatas) => {
     const response = await api.post(
@@ -15,7 +24,6 @@ const fetchlogin = async (value: loginDatas) => {
         value
     );
 
-   
     return response.data;
 };
 
@@ -27,8 +35,8 @@ export function useLogin() {
 
 
 const fetchRegister = async (value:RegisterDatas) => {
-    const response = await axios.post(
-        `${API_URL}/auth/register `,
+    const response = await api.post(
+        "/auth/register ",
         value
     )
 
@@ -43,8 +51,8 @@ export function useRegister() {
 
 
 const fetchForgorPassword = async (email:string) => {
-    const response = await axios.post(
-        `${API_URL}/auth/forgotpassword`,{email}
+    const response = await api.post(
+        `/auth/forgotpassword`,{email}
     )
 
     return response.data
@@ -58,8 +66,8 @@ export function useForgotPassword() {
 
 
 const fetchVerifyCode = async (value:VerifyCode) => {
-    const response = await axios.post(
-        `${API_URL}/auth/verifycode `,
+    const response = await api.post(
+        `/auth/verifycode `,
         value
     )
 
@@ -73,8 +81,8 @@ export function useVerifyCode() {
 }
 
 const fetchCreatePassword= async (value:CreatePasswordData) => {
-    const response = await axios.post(
-        `${API_URL}/auth/update `,value)
+    const response = await api.post(
+        `/auth/update `,value)
 
     return response.data
 }
@@ -83,6 +91,19 @@ export function useCreatePassword() {
   return useMutation({
     mutationFn: fetchCreatePassword,
   });
+}
+
+export function useMe(){
+   return useQuery({
+          queryKey: ["user"],
+          queryFn: () => fetchMe()
+      });
+}
+
+export function useLogout(){
+  return useMutation({
+    mutationFn: fetchLogout,
+  })
 }
 
 type loginDatas = {

@@ -6,21 +6,21 @@ import { Text } from "@components/UI/Text"
 import { Accordion } from "@components/UI/Accordion"
 import { ScrollToTop } from "@components/UI/ScrollToTop"
 import { Breadcrumbs } from "../../Components/UI/Breadcrumb"
-import {ImagePreview} from "../../Components/Features/ImagePreview"
 import { ProductInfo } from "@components/Layout/ProductInformation"
+import { ImagePreview } from "../../Components/Features/ImagePreview"
 
-import { useProduct } from "../../hooks/useProductsData"
+import { useGet } from "../../service/productsService"
 
 
 
 
 
 const ProductPage = () =>{
-    const { category, slug, id } = useParams();    
-    const {data, isLoading } = useProduct(Number(id))
+    const {  slug, id } = useParams();    
+    const {data, isLoading } = useGet(String(id))
     
     const paths = [
-        String(category)
+        String(data?.data?.category)
     ]
     
     return(
@@ -31,15 +31,15 @@ const ProductPage = () =>{
             
             <Flex gap="62px" >
                 {/* Imagems do produto */}
-                <ImagePreview isLoading={isLoading} images={data?.images} />
+                <ImagePreview isLoading={isLoading} images={data?.data?.images} />
                 
                 {/* Informacoes produto */}
-                <ProductInfo isLoading={isLoading} product={data} />
+                <ProductInfo isLoading={isLoading} product={data?.data} />
                                  
             </Flex>
             <Accordion title="Detalhes do produto">
                 <Text fontSize="small" color="secondary">
-                    {data?.description}
+                    {data?.data?.description}
                 </Text>
             </Accordion>
         </DefaultTemplate>

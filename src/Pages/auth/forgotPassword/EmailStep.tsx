@@ -28,7 +28,7 @@ const EmailStep = () => {
 
 
     return(
-        <>
+        <Flex fullWidth={true} justifyContent="center">
             <ContainerCard>
                 <Flex flexDirection="column" gap="0px" >
                     <Text fontSize="large">Recuperar Senha</Text>
@@ -45,7 +45,9 @@ const EmailStep = () => {
                 </Flex>
                 <SocialAuth/>
             </ContainerCard>
-        </>
+
+           
+        </Flex>
     )
 }
 
@@ -69,3 +71,4 @@ const LinkText = styled(Link)`
     text-decoration: underline;
     font-size: 14px;
 `
+

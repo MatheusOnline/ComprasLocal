@@ -1,7 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
 import { DefaultTemplate } from "../../Template/DefaultTemplate";
-import { useProductSearch } from "../../hooks/useProductsSearchData";
 import { CatalogProducts } from "@components/Layout/CatalogProducts";
 
 import { FiltersMenu } from "@components/Layout/FiltersBar";
@@ -10,14 +9,15 @@ import { Breadcrumbs } from "@components/UI/Breadcrumb";
 import { Flex } from "@components/UI/Flex";
 import { ScrollToTop } from "@components/UI/ScrollToTop";
 
+import { useList } from "../../service/productsService";
+
 const Search = () => {
     const [searchParams] = useSearchParams();
 
     const q = searchParams.get("q") || "";
 
-    const { data, isLoading } = useProductSearch(q);
-    console.log(data)
-
+    const { data, isLoading } = useList({search: q});
+    
     const capitalize = (text: string) => {
         if (!text) return "";
 
@@ -28,18 +28,11 @@ const Search = () => {
     const filteredData = useMemo(() => {
         if (!data) return []
 
-        let result = data
-
-        const price = Number(searchParams.get("price")) || 500
-        const distance = Number(searchParams.get("distance")) || 0
-        const rating = searchParams.get("rating") || ""
-
-        if (price) result = result.filter((i: any) => i.price <= price)
-        if (distance) result = result.filter((i: any) => i.distance <= distance)
-        if (rating) result = result.filter((i: any) => i.rating >= Number(rating))
+        let result = data?.data?.products
 
         return result
     }, [data, searchParams])
+
 
     return (
         <DefaultTemplate>

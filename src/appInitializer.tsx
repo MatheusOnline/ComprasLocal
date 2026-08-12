@@ -1,16 +1,21 @@
 import { useEffect } from "react";
-import { useAuth } from "./stores/useAuth";
-import { useCartStore } from "./stores/cartStore";
+import { useMe } from "./service/authService";
+import { useAuth } from "./stores/useAuthStore";
 
 export function AppInitializer() {
-  const { user } = useAuth();
-  const { getCart } = useCartStore();
+    const setUser = useAuth((state) => state.setUser);
 
-  useEffect(() => {
-    if (user) {
-      getCart();
-    }
-  }, [user, getCart]);
+    const { data, isSuccess } = useMe();
 
-  return null;
+    useEffect(() => {
+        if (!isSuccess) return;
+
+        setUser({
+            name: data?.data?.name,
+            email: data?.data?.email,
+            cpf: data?.data?.cpf
+        });
+    }, [isSuccess, data, setUser]);
+
+    return null;
 }
