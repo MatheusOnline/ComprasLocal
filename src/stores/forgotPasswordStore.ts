@@ -10,6 +10,7 @@ const api = axios.create({
 interface user{
     name: string,
     email: string
+    cpf: string
 }
 
 interface emailResponse {

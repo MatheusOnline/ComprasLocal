@@ -23,7 +23,7 @@ const NewPasswordStep = () => {
             if(password === passwordConfi){
                 const result = await newPasswordFunction(password, resetToken)
                 if(result?.success){
-                    setUser({name: result.user.name, email: result.user.email })
+                    setUser({name: result.user.name, email: result.user.email , cpf: result.user.cpf})
                     navigate("/")
                 }
 
