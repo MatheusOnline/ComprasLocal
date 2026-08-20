@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { DefaultTemplate } from "../../Template/DefaultTemplate";
@@ -7,53 +7,64 @@ import { Breadcrumbs } from "@components/UI/Breadcrumb";
 import { Flex } from "@components/UI/Flex";
 import { Text } from "@components/UI/Text";
 import { Line } from "@components/UI/Line";
-
+import { Button } from "@components/UI/Button";
 
 import { CartSummary } from "@components/Layout/CartSummary";
-import { useCheckoutStore } from "../../stores/checkoutStore";
+import { useGetCheckout } from "../../service/checkoutService";
 import { useAuth } from "../../stores/useAuthStore";
 
 import formatedCPF from "../../functions/formatedCpf";
+import { ModalCreateAddress } from "@components/Layout/ModalCreateAddress";
+import { ModalSelectedAnddress } from "@components/Layout/ModalSelectedAnddress";
+import { usePixGenerate } from "../../service/PaymentService";
+
+
 
 
 const Checkout = () => {
     const navigate = useNavigate();
-     const { checkoutId } = useParams();
+    const { checkoutId } = useParams();
+    const [createAddress, setCreateAddress] = useState(false)
+    const [selectedAddress, setSelectedAddress] = useState(false)
     const [payMethod, setPayMethod ] = useState("");
-    const [products, setProducts] = useState<any>([])
-    const [checkout_id, setCheckout_id] = useState("")
-    const [total, setTotal] = useState(0)
-    const [subtotal, setSubtotal] = useState(0) 
-    const { getCheckout } = useCheckoutStore()
-    const { user } = useAuth()
     
-    useEffect(() => {
-      
-       get()
-    },[checkoutId])
-
-    async function get() {
-      const data = await getCheckout(checkoutId || "")
-      
-      setProducts(data?.products)
-      setTotal(data?.total || 0)
-      setSubtotal(data?.subtotal || 0)
-      setCheckout_id(data?.checkoutId || "")
-    }
   
+    const { user } = useAuth()
+    const {data, refetch} =  useGetCheckout(checkoutId || "")
+    const generatePix = usePixGenerate();
+    
+    
+    const hasAddress = !!data?.address && Object.keys(data.address).length > 0;
+    const isCheckoutDisabled = !hasAddress || !payMethod;
 
     const handleCheckout = () => {
+      if (!hasAddress) return;
+      if (!payMethod) return;
+
       if (payMethod === "PIX") {
-        navigate(`/payment/pix/${checkout_id}`);;
+        handleCreatePix();
         return;
       }
 
       if (payMethod === "CARTAO") {
-        navigate(`/payment/card/${checkout_id}`);
+        navigate(`/payment/card/${checkoutId}`);
         return;
       }
     };
-    console.log(user)
+
+    function handleCreatePix() {
+        generatePix.mutateAsync(checkoutId || "", {
+          onSuccess: () => {
+            navigate(`/payment/pix/${checkoutId}`);
+          },
+          onError: (error: any) => {
+            console.log(error.response.data);
+          },
+        });
+    }
+
+    
+    
   return (
     <DefaultTemplate>
       <Breadcrumbs label="checkout" path={["cart"]} isLoading={false}/>
@@ -65,12 +76,12 @@ const Checkout = () => {
           {/* PRODUTOS */}
           <ProductsContainer>
 
-            <Text fontSize="medium" fontWeight="semi-bold">{products.length} Produtos</Text>
+            <Text fontSize="medium" fontWeight="semi-bold">{data?.products.length} Produtos</Text>
 
             
             <ProductsList>
-              {products.length ? (
-                products.map((item:any) => (
+              {data?.products.length ? (
+                data?.products.map((item:any) => (
                   <ProductItem key={item.id}>
                     <Flex>
                           <ImagemProduct src={item.image} alt="" />
@@ -91,14 +102,47 @@ const Checkout = () => {
 
           </ProductsContainer>
           
-          <Line />
+          
 
           {/* ENDEREÇO */}
           <Flex flexDirection="column" gap="10px">
-            <Text fontSize="medium"  fontWeight="semi-bold">Endereço</Text>
-            <Flex gap="20px">
-                <Text>Rua Curitiba 5220 - Umuarama</Text> <ReplaceButton>Alterar</ReplaceButton>
-            </Flex>
+            {!hasAddress ? (
+                  <AddressWarning>
+                      <Text fontWeight="semi-bold">
+                          Você não tem nenhum endereço cadastrado.
+                      </Text>
+
+                      <Text color="secondary">
+                          Cadastre um endereço para continuar com a compra.
+                      </Text>
+
+                      <Button
+                          variant="outlined"
+                          palette="primary"
+                          onclick={() => {setCreateAddress(true)}}
+                      >
+                          Cadastrar endereço
+                      </Button>
+                  </AddressWarning>
+              ) : (
+                  <Flex flexDirection="column" gap="10px">
+                    <Text fontSize="medium" fontWeight="semi-bold">Endereço</Text>
+                    <Flex gap="10px">
+                      <Text fontSize="medium" fontWeight="normal">
+                          {data.address.street}, {data.address.number}
+                      </Text>
+                      |
+                      <Text fontSize="medium" fontWeight="normal">
+                          {data.address.city}
+                      </Text>
+
+                      <ReplaceButton onClick={() => {setSelectedAddress(true)}}>
+                        Alterar
+                      </ReplaceButton>
+
+                    </Flex>
+                  </Flex>
+              )}
           </Flex>
 
           <Line />
@@ -131,9 +175,21 @@ const Checkout = () => {
 
         </ContainerTopics>
 
-        <CartSummary isLoading={false} isEnabled={!!!payMethod}  onConfirm={handleCheckout} subtotal={subtotal} total={total} />
+        <CartSummary isLoading={false} isEnabled={isCheckoutDisabled} onConfirm={handleCheckout} subtotal={data?.subtotal || 0} total={data?.total || 0} />
         
       </Flex>
+      <ModalCreateAddress
+        checkoutId={checkoutId || ""}
+        onClose={() => {setCreateAddress(false)}}
+        open={createAddress}
+        onSuccess={refetch}
+      />
+      <ModalSelectedAnddress
+        checkoutId={checkoutId || ""}
+        onClose={() => {setSelectedAddress(false)}}
+        open={selectedAddress}
+        onSuccess={refetch}
+      />
     </DefaultTemplate>
   );
 };
@@ -205,6 +261,19 @@ const ReplaceButton = styled.button`
     text-decoration: underline;
     cursor: pointer;
 `
+
+const AddressWarning = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 20px;
+
+    border: 1px solid ${({ theme }) => theme.colors.neutro_color_300};
+    border-radius: 8px;
+
+    background: ${({ theme }) => theme.colors.background_color};
+`;
 
 
 /* ===== PAYMENT ===== */

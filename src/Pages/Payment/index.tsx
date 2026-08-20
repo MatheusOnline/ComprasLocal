@@ -5,39 +5,27 @@ import { Flex } from "@components/UI/Flex"
 import { Text } from "@components/UI/Text"
 import { Button } from "@components/UI/Button"
 import { ScrollToTop } from "@components/UI/ScrollToTop"
-import { usePixGenerate } from "../../hooks/usePaymentQuery"
-import { useEffect, useState } from "react"
-import { useCheckoutQuery } from "../../hooks/useCheckoutQuery"
 
+import { useEffect } from "react"
 
+import { io } from "socket.io-client";
+import { useGetPaymentData } from "../../service/PaymentService";
 
 
 
 const Payment = () => {
     const navigate = useNavigate()
     const { checkoutId } = useParams();
-    const { data } = useCheckoutQuery(checkoutId);
-    const { mutateAsync } = usePixGenerate();
-    const [qrcode, setQrcode] = useState("")
+    const { data } = useGetPaymentData(checkoutId || "");
     
-    useEffect(() => {
-        if (checkoutId) {
-            async function loadPix() {
-                if (!checkoutId) return;
+    
+    
 
-                const response = await mutateAsync(checkoutId);
-
-                setQrcode(response.qrcode);
-            }
-
-        loadPix();
-    }
-    }, [checkoutId]);
 
     
     const copyQrCode = async () => {
         try {
-            await navigator.clipboard.writeText("");
+            await navigator.clipboard.writeText(data?.data?.qr_code || "");
             return true;
         } catch {
             return false;
@@ -45,12 +33,34 @@ const Payment = () => {
     };
 
     useEffect(() => {
-        console.log("Checando")
-        if (data?.status === "paid") {
-            navigate("/success");
-        }
-    }, [data]);
+        if (!checkoutId) return;
 
+        const socket = io("http://localhost:3000", {
+            withCredentials: true
+        });
+
+        socket.on("connect", () => {
+            console.log("Socket conectado:", socket.id);
+
+            socket.emit("join_checkout", checkoutId);
+        });
+
+        socket.on("payment:approved", (data) => {
+            console.log("Pagamento aprovado:", data);
+
+            
+             navigate(`/pedido/${checkoutId}`);
+        });
+
+        socket.on("disconnect", () => {
+            console.log("Socket desconectado");
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+
+    }, [checkoutId]);
     
 
     return(
@@ -63,9 +73,10 @@ const Payment = () => {
                         <Button onclick={() => {navigate(-1)} } variant="text" palette="neutral"> Voltar</Button>
                     </Flex>
                     
-                    <Flex fullWidth={true} gap="20px" flexDirection="column" alignItems="center" justifyContent="center">
+                    <Flex fullWidth={true} gap="10px" flexDirection="column" alignItems="center" justifyContent="center">
                         
-                        <ImagemPix src={"data:image/png;base64," + qrcode}/>
+                        <ImagemPix src={"data:image/png;base64," + data?.data?.qr_code_base64}/>
+                        <Text fontSize="large" color="primary">R$ {data?.data?.amount?.toFixed(2)}</Text>
                         <Button palette="primary" variant="outlined" onclick={copyQrCode}>Copiar Codigo pix </Button>
                     </Flex>
                     <Flex flexDirection="column" gap="10px">

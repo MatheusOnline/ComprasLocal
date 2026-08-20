@@ -4,7 +4,7 @@ import { Flex } from "@components/UI/Flex";
 import { Text } from "@components/UI/Text";
 import { Button } from "@components/UI/Button";
 import { Input } from "@components/UI/Input/Input";
-import {SocialAuth} from "@components/Layout/SocialAuth/SocialAuth";
+//import {SocialAuth} from "@components/Layout/SocialAuth/SocialAuth";
 import { ScrollToTop } from "@components/UI/ScrollToTop";
 import { useState } from "react";
 import { Message } from "@components/UI/message";
@@ -30,6 +30,9 @@ const Register = () => {
 
     const navigate = useNavigate()
     
+    const isFormValid = email.trim() !== "" && password.trim() !== "" && firstname.trim() !== "" && lastname.trim() !== "" && phone.trim() !== "" && cpf.trim() !== "" && passwordConfi.trim() !== "";
+
+
     const handleCpfChange = (value: string) => {
         if(cpf.length > 13)
             return
@@ -87,7 +90,6 @@ const Register = () => {
                 }
             },
             onError: (error: any) => {
-                console.log(error)
                 setError(error.response.data.message)
             }
         })
@@ -117,8 +119,8 @@ const Register = () => {
                             <Input label="Telefone" type="text" placeholder="(00) 00000-0000" value={phone} onChange={(e) => handlePhoneChange(e.target.value)}/>
                         </Flex>
                         <Input label="Email" type="text" placeholder="Email" value={email} onChange={(e) => {setEmail(e.target.value)}} />
-                        <Input label="Senha" type="text" placeholder="*********" value={password} onChange={(e) => {setPassword(e.target.value)}} />
-                        <Input label="Confirmar senha" type="text" placeholder="*********"  value={passwordConfi} onChange={(e) => {setPasswordConfi(e.target.value)}} />
+                        <Input  label="Senha" type="password" placeholder="*********" value={password} onChange={(e) => {setPassword(e.target.value)}} />
+                        <Input label="Confirmar senha" type="password" placeholder="*********"  value={passwordConfi} onChange={(e) => {setPasswordConfi(e.target.value)}} />
                     </Flex>
                     
                     <Flex gap="10px">
@@ -126,11 +128,11 @@ const Register = () => {
                         <label htmlFor="terms">Li e concordo com os termos de uso</label>
                     </Flex>
                     <Flex fullWidth={true} justifyContent="center"><Message status="error">{error}</Message></Flex>
-                    <Button palette="primary" variant="contained" onclick={handleSubmit}>Cadastrar</Button>
+                    <Button palette="primary" variant="contained" onclick={handleSubmit} disabled={!isFormValid || RegisterMutation.isPending}>Cadastrar</Button>
                     <Flex fullWidth justifyContent="center">
                         <Text fontSize="small">Já tem uma conta? <LinkText to="/auth/login">Faça login</LinkText></Text>
                     </Flex>
-                    <SocialAuth/>
+                    
                 </ContainerCard>
 
                 <Img src={image} alt="" />

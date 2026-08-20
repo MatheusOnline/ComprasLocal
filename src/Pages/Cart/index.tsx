@@ -35,7 +35,6 @@ const CartPage = () =>{
         },{
             onSuccess: async (data) => {
     
-                console.log(data)
                  navigate(`/payment/checkout/${data?.data?.checkoutId}`)
             },
             onError: (error: any)  => {

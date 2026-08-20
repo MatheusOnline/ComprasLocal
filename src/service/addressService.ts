@@ -5,6 +5,17 @@ import { api } from "./api";
 
 
 
+type AddressTypes = {
+    label: string
+    city: string
+    street: string
+    number: string,
+    postal_code: string
+    district: string
+    reference: string
+    complement: string
+
+}
 
 
 const fetchList = async () => {
@@ -17,6 +28,12 @@ const fetchDelete = async (id: string) => {
     const response = await api.delete(`address/${id}`);
     return response.data;
 };
+
+const fetchCreate = async(data:AddressTypes) => {
+    const response = await api.post(`address`,data)
+
+    return response.data
+}
 
 
 
@@ -42,4 +59,17 @@ export function useDeleteAddress() {
     });
 }
 
+
+export function useCreateAddress(){
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: fetchCreate,
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["address"]
+            })
+        }
+    })
+}
 

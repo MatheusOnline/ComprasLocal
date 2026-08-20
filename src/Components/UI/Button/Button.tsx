@@ -84,6 +84,7 @@ const ButtonStyled = styled.button<props>`
 
 
         &.__button-contained-neutral {
+            color: ${({ theme }) => theme.colors.neutro_color_500};
             background-color: ${({ theme }) => theme.colors.neutro_color_300};
         
             &:hover{

@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUrl = "https://compraslocal.onrender.com";
+const apiUrl = "http://localhost:3000";
 
 
 

@@ -26,9 +26,10 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
-    
     const navigate = useNavigate()
 
+
+    const isFormValid = email.trim() !== "" && password.trim() !== "";
     const handleSubmit = async () => {
         if(!email || !password){
             setError("Preencha todos os campo para continuar.")
@@ -42,20 +43,19 @@ const Login = () => {
             
         },{
             onSuccess: async (data) => {
-                if(!data.success){
-                    setError("Email ou senha incorreto")
-                    return
-                }
                 setUser({name: data?.data?.name, email: data?.data?.email, cpf: data?.data?.cpf })
                 navigate("/")
-                
             },
             onError: (error: any)  => {
-                console.log(error.response.data)
+                if(error.response.data.code === "INVALID_CREDENTIALS"){
+                    setError("Email ou senha incorreto, Tente novamente")
+                }
             }
         })
         
     }
+
+
 
     return (
         <DefaultTemplate>
@@ -74,7 +74,7 @@ const Login = () => {
                     <Flex fullWidth={true} justifyContent="center" alignItems="center">
                         <Message status="error">{error} </Message>  
                     </Flex>
-                    <Button palette="primary" variant="contained" onclick={handleSubmit} disabled={loginMutation.isPending }>{loginMutation.isPending ? "Entrando..." : "Login"}</Button>
+                    <Button palette="primary" variant="contained" onclick={handleSubmit} disabled={!isFormValid || loginMutation.isPending}>{loginMutation.isPending ? "Entrando..." : "Login"}</Button>
                     <Flex fullWidth justifyContent="center">
                         <Text fontSize="small">Não tem uma conta? <LinkText to="/auth/register">Cadastre-se</LinkText></Text>
                     </Flex>
